@@ -1,11 +1,18 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .title{
-    color: #00D7FF;
+    color: #ffff;
+    margin-top: 1em;
 }
 
 .body{
     padding: 0;
     margin: 0;
-    background-color: #5800FF;
+    background-color: #000;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -14,8 +21,16 @@
     align-items: center;    
 }
 
+.modal{
+    margin-right: 10px;
+}
+
+.text{
+    
+}
+
 .items{
-    background-color: #0096FF;
+    background-color:gray;
     padding: 20px ;
     list-style: none;
     display: flex;
@@ -31,32 +46,35 @@
 }
 
 .additem{
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background-color: transparent;
     border: 2px solid #ffff;
-    color: #00D7FF;
+    color: gray;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
 }
 
 .digitadd{
+    padding-left: 10px;
     background-color: transparent;
-    border: 2px dashed white;
+    border: 2px solid white;
     margin-bottom: 5px;
+    margin-top: 10px;
     border-radius: 10px;
     color: aliceblue;
 }
 
 .digitadd:focus{
-    background-color: #00D7FF;
-    border: 1px double gold;
+    background-color: gray;
+    border: 1px gold;
 }
 
 .buttonX{
     background-color: transparent;
     color: aliceblue;
-    border: 2px dotted aliceblue;
+    border: 2px none aliceblue;
 
 }
 
