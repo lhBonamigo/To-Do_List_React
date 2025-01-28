@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import useFetch from "../../Functions/useFetch";
 import { Field } from "../../components/ui/field.jsx"
-import { HiHeart } from "react-icons/md"
 
 import {
   Button,
@@ -10,8 +9,8 @@ import {
   Flex,
   Text,
   List,
-  Center
 } from '@chakra-ui/react'
+import { UserContext } from "../../Functions/UserContext";
 
 const Home = () => {
   const url = "http://localhost:5000/addTask";
@@ -21,7 +20,9 @@ const Home = () => {
   const { data, httpConfig } = useFetch(url); // Hook customizado para requisições
   const ref = useRef(null); // Referência ao input de texto
   const [trigger, setTrigger] = useState(0);
+  const {user} = useState(UserContext);
 
+  console.log(user)
   // Buscar tarefas ao carregar o componente
   useEffect(() => {
     httpConfig(null, "GET"); // Faz a requisição GET para obter tarefas
