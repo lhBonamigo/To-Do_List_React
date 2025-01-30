@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../Functions/UserContext";
 import usePost from "../../Functions/usePost";
+import { Box, Input, Flex, Heading, Button } from "@chakra-ui/react";
 
 export const logado = false;
 
@@ -11,9 +12,9 @@ const Login = () => {
   const [usuario, setUsuario] = useState("Luckkkkas");
   const [pass, setPass] = useState("SKOI7617");
   const { dataPost, httpConfigPost } = usePost(urlLogin);
-  const Navigate = useNavigate(); 
-  const {setUser, setLogged} = useContext(UserContext);
-  
+  const Navigate = useNavigate();
+  const { setUser, setLogged } = useContext(UserContext);
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita o comportamento padrão do formulário
 
@@ -37,28 +38,37 @@ const Login = () => {
       setLogged(true);
       Navigate('/')
     }
- }
+  }
 
   return (
-    <div className="body">
-      <form className="body" onSubmit={handleSubmit}>
-        <input
-          className="digitadd"
-          placeholder="Usuário"
-          type="text"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-        <input
-          className="digitadd"
-          placeholder="Senha"
-          type="password"
-          value={pass}
-          onChange={(e) => setPass(e.target.value)}
-        />
-        <button type="submit">Login</button>
+    <Box w={'500px'} mx={'auto'} mt={'50px'}>
+          <Heading size={'3xl'} textAlign={'center'}>Faça login e registre suas tarefas agora mesmo!</Heading>
+      <form onSubmit={handleSubmit}>
+        <Flex w={'100%'} direction={'column'} mt={'50px'}>
+          <Input
+            pl={'.5em'}
+            variant={'outline'}
+            placeholder="Usuário"
+            type="text"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+          />
+          <Input
+            pl={'.5em'}
+            mt={'1em'}
+            variant={'outline'}
+            placeholder="Senha"
+            type="password"
+            value={pass}
+            onChange={(e) => setPass(e.target.value)}
+          />
+          <Flex w={'100%'} justify={'flex-end'}>
+          <Button pl={'7px'} background={'gray'} mr={'5px'} mt={'.5em'} w={'90px'} onClick={()=>Navigate('/Cadastro')} >Cadastrar</Button>
+          <Input type="submit" pl={'7px'} background={'lightgreen'} mt={'.5em'} value={'Login'} w={'50px'} />
+          </Flex>
+        </Flex>
       </form>
-    </div>
+    </Box>
   );
 };
 

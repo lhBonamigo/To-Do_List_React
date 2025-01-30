@@ -9,17 +9,16 @@ import useGet from "../../Functions/useGet.js";
 import usePut from "../../Functions/usePut.js";
 
 const Home = () => {
-  const { user, logged } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [userID, setUserID] = useState(null);
   const [tarefas, setTarefas] = useState([]);
   const [novaTarefa, setNovaTarefa] = useState("");
-  const [deadline, setDeadline] = useState("2025-01-01");
+  const [deadline, setDeadline] = useState("0000-00-00");
   const [trigger, setTrigger] = useState(0);
-  const { dataPut, httpConfigPut } = usePut('http://localhost:5000/Update');
-  const { dataPost, httpConfigPost } = usePost('http://localhost:5000/addTask');
-  const { dataDel, httpConfigDel } = useDelete('http://localhost:5000/Delete');
+  const { httpConfigPut } = usePut('http://localhost:5000/Update');
+  const { httpConfigPost } = usePost('http://localhost:5000/addTask');
+  const { httpConfigDel } = useDelete('http://localhost:5000/Delete');
   const { dataGet, httpConfigGet } = useGet(`http://localhost:5000/?id=${userID}`);
-  const [triggerStatus, setTriggerStatus] = useState(0);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const Home = () => {
       setUserID(user.results[0].id);
     }
   }, [user]);
-
+  
   useEffect(() => {
     if (userID) {
       httpConfigGet("GET");
@@ -131,7 +130,7 @@ const Home = () => {
       {tarefas.length > 0 ? (
         <List.Root>
           {tarefas.map((tarefa, index) => (
-            <List.Item key={index} w={"90vw"} maxW={`900px`} background={"gray"} pl={`.3em`} mb={".2em"} mt={".5"} display={"flex"} alignItems={"Center"}>
+            <List.Item key={index} w={"90vw"} maxW={`900px`} background={"lightgray"} pl={`.3em`} mb={".2em"} mt={".5"} display={"flex"} alignItems={"Center"}>
               <input
                 type="checkbox"
                 checked={tarefa.status}

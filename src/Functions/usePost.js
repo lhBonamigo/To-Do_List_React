@@ -29,8 +29,11 @@ export const usePost = (url) => {
                 let res;
                 res = await fetch(url, config);
 
-
-                if (!res.ok) throw new Error(`Erro: ${res.status}`);
+                if (!res.ok) {
+                    setError(res);
+                    setData(null);
+                    throw new Error(`Erro: ${res.status}`)
+                };
                 const json = await res.json();
                 setData(json);
                 setError(null);
