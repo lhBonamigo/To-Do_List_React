@@ -19,6 +19,7 @@ const Home = () => {
   const { dataPost, httpConfigPost } = usePost('http://localhost:5000/addTask');
   const { dataDel, httpConfigDel } = useDelete('http://localhost:5000/Delete');
   const { dataGet, httpConfigGet } = useGet(`http://localhost:5000/?id=${userID}`);
+  const [triggerStatus, setTriggerStatus] = useState(0);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -63,18 +64,24 @@ const Home = () => {
   };
 
   const handleCheckboxChange = (id) => {
-    setTarefas((prevTarefas) =>
-      prevTarefas.map((tarefa) =>
-        tarefa.id === id ? { ...tarefa, status: tarefa.status === 0 ? 1 : 0 }
-          : tarefa
-      )
-    );
-
-    const taskbody = {
-      id
-    }
-    //fazer o update das infos checkadas aqui
-   httpConfigPut(taskbody, "PUT");
+    setTarefas((prevTarefas) => {
+      const novasTarefas = prevTarefas.map((tarefa) =>
+        tarefa.id === id ? { ...tarefa, status: tarefa.status === 0 ? 1 : 0 } : tarefa
+      );
+  
+      // Pegamos o status atualizado da tarefa para enviar na requisição
+      const tarefaAtualizada = novasTarefas.find((tarefa) => tarefa.id === id);
+  
+      if (tarefaAtualizada) {
+        const body = {
+          id,
+          status: tarefaAtualizada.status, // Enviando o status atualizado
+        };
+        httpConfigPut(body, "PUT");
+      }
+  
+      return novasTarefas;
+    });
   };
 
   return (
