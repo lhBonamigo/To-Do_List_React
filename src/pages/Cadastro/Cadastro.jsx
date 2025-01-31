@@ -3,7 +3,6 @@ import { Box, Input, Button, Heading } from '@chakra-ui/react';
 import { Field } from "../../components/ui/field.jsx";
 import usePost from '../../Functions/usePost';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../Functions/UserContext.jsx';
 
 const Cadastro = () => {
     const url = 'http://localhost:5000/CreateUser'

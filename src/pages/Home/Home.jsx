@@ -104,7 +104,7 @@ const Home = () => {
             onChange={(e) => setNovaTarefa(e.target.value)}
           />
         </Field>
-        <Field label={"Deadline"}>
+        {/* {<Field label={"Deadline"}>
           <Input
             type="date"
             variant={"flushed"}
@@ -112,14 +112,13 @@ const Home = () => {
             onChange={(e) => setDeadline(e.target.value)}
             className="deadline-input"
           />
-        </Field>
+        </Field>} */}
         <Button
           type="submit"
           value="Adicionar"
           disabled={!novaTarefa.trim()}
-          w={"100%"}
-          marginX={"auto"}
-          mt={`1em`}
+          w={"10%"}
+          my={'auto'}
           mb={"2em"}
           className="submit-button"
         >

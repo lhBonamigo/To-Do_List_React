@@ -28,6 +28,8 @@
 .form{
     width: 90vw;
     max-width: 900px;
+    display: flex;
+    flex-direction: row;
 }
 
 input[type="checkbox"]:checked + .text {
