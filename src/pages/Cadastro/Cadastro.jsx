@@ -49,7 +49,7 @@ const Cadastro = () => {
             <Heading size={'3xl'} textAlign={'Center'} mt={'1em'}>
                 Criar Conta
             </Heading>
-            <Box border={'1px solid black'} p={'1em'} borderRadius={'2xl'} w={'90vw'} m={'auto'} mt={'1em'}>
+            <Box p={'1em'} w={'500px'} m={'auto'} mt={'1em'}>
                 <form onSubmit={createUser}>
                     <Field label="Usuário:">
                         <Input type={"text"}
@@ -73,7 +73,7 @@ const Cadastro = () => {
                     <Button type='submit' mt={'1em'}>
                         Criar Conta
                     </Button>
-                    <Button mt={'1em'} ml={'.3em'} variant={'outline'}>
+                    <Button mt={'1em'} ml={'.3em'} variant={'outline'} onClick={()=> Navigate('/Login')}>
                         Fazer Login
                     </Button>
                 </form>

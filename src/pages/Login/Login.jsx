@@ -9,8 +9,8 @@ export const logado = false;
 
 const Login = () => {
   const urlLogin = "http://localhost:5000/Login";
-  const [usuario, setUsuario] = useState("Luckkkkas");
-  const [pass, setPass] = useState("SKOI7617");
+  const [usuario, setUsuario] = useState("");
+  const [pass, setPass] = useState("");
   const { dataPost, httpConfigPost } = usePost(urlLogin);
   const Navigate = useNavigate();
   const { setUser, setLogged } = useContext(UserContext);
