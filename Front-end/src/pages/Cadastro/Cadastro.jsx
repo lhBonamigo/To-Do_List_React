@@ -1,26 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Box, Input, Button, Heading } from '@chakra-ui/react';
+import { Box, Input, Button, Heading, Text } from '@chakra-ui/react';
 import { Field } from "../../components/ui/field.jsx";
 import usePost from '../../Functions/usePost';
 import { useNavigate } from 'react-router-dom';
 
 const Cadastro = () => {
     const url = 'https://api-todo-ckia.onrender.com/CreateUser'
+    const Navigate = useNavigate();
     const [pass, setPass] = useState('');
     const [usuario, setUsuario] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
+    const [errorMessage, setErrorMessage]=useState('');
     const { httpConfigPost, error , dataPost} = usePost(url);
-    const Navigate = useNavigate();
 
     const createUser = (e) => {
         e.preventDefault();
         if (!usuario || !pass || !confirmPass) {
-            alert("Por favor, preencha todos os campos.");
+           setErrorMessage("Por favor, preencha todos os campos.");
             return;
         };
 
         if (pass != confirmPass) {
-            alert("As Senhas precisam ser iguais.");
+            setErrorMessage("As Senhas precisam ser iguais.");
             return;
         };
         const user = {
@@ -40,12 +41,13 @@ const Cadastro = () => {
     },[error])
 
     if(dataPost) {
-        alert("Usuário criado Faça login para continuar")
+        setErrorMessage("Usuário criado Faça login para continuar")
         Navigate('/');
     }
 
     return (
         <>
+            {errorMessage ? (<Text background={'red'} textAlign={'center'} position={'sticky'}>{errorMessage}</Text>):(null)}
             <Heading size={'3xl'} textAlign={'Center'} mt={'1em'}>
                 Criar Conta
             </Heading>

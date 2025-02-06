@@ -129,7 +129,7 @@ const Home = () => {
       {tarefas.length > 0 ? (
         <List.Root>
           {tarefas.map((tarefa, index) => (
-            <List.Item key={index} w={"90vw"} maxW={`900px`} background={"lightgray"} pl={`.3em`} mb={".2em"} mt={".5"} display={"flex"} alignItems={"Center"}>
+            <List.Item key={index} w={"90vw"} maxW={`900px`} background={"lightblue"} pl={`.3em`} mb={".2em"} mt={".5"} display={"flex"} alignItems={"Center"}>
               <input
                 type="checkbox"
                 checked={tarefa.status}

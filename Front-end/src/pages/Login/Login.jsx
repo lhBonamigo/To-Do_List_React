@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../Functions/UserContext";
 import usePost from "../../Functions/usePost";
-import { Box, Input, Flex, Heading, Button } from "@chakra-ui/react";
+import { Box, Input, Flex, Heading, Button, Text } from "@chakra-ui/react";
 
 export const logado = false;
 
@@ -14,12 +14,13 @@ const Login = () => {
   const { dataPost, httpConfigPost } = usePost(urlLogin);
   const Navigate = useNavigate();
   const { setUser, setLogged } = useContext(UserContext);
+  const [errorMessage, setErrorMessage]=useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita o comportamento padrão do formulário
 
     if (!usuario || !pass) {
-      alert("Por favor, preencha todos os campos.");
+      setErrorMessage("Por favor, preencha todos os campos.");
       return;
     }
 
@@ -37,10 +38,14 @@ const Login = () => {
       setUser(dataPost);
       setLogged(true);
       Navigate('/')
+      return
     }
+    setErrorMessage("Usuário ou senha invalido")
   }
 
   return (
+    <>
+       {errorMessage ? (<Text background={'red'} textAlign={'center'} position={'sticky'}>{errorMessage}</Text>):(null)}
     <Box w={'500px'} mx={'auto'} mt={'50px'}>
           <Heading size={'3xl'} textAlign={'center'}>Faça login e registre suas tarefas agora mesmo!</Heading>
       <form onSubmit={handleSubmit}>
@@ -68,7 +73,7 @@ const Login = () => {
           </Flex>
         </Flex>
       </form>
-    </Box>
+    </Box></>
   );
 };
 
