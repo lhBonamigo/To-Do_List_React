@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Heading, Text, Flex, ProgressCircle } from '@chakra-ui/react';
-import usePost from '../../Functions/usePost';
+import usePost from '../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';
-import LoginInput from '../../components/LoginInput.jsx'
+import LoginInput from '../../components/LoginInput'
 
 const Cadastro = () => {
-    const url = 'https://api-todo-ckia.onrender.com/CreateUser'
+    const url = 'https://api-todo-ckia.onrender.com/user/register'
     const Navigate = useNavigate();
     const [pass, setPass] = useState('');
     const [usuario, setUsuario] = useState('');

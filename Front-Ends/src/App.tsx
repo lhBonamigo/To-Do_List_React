@@ -2,15 +2,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
-import { Provider } from "./components/ui/provider.jsx";
+import { Provider } from "./components/ui/provider";
 import Cadastro from './pages/Cadastro/Cadastro';
-import UserContextProvider from './Functions/UserContext';
-import { useContext } from 'react';
-import {UserContext} from './Functions/UserContext'
+import UserContextProvider from './hooks/UserContext';
+import { Context, ReactElement, useContext } from 'react';
+import {UserContext} from './hooks/UserContext'
 
 function AppRoutes() {
-  const { logged } = useContext(UserContext); // Agora está dentro do provider
-  return (
+  const { logged } = useContext(UserContext); 
+   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={logged ? <Home /> : <Login />} />

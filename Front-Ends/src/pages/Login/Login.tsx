@@ -1,24 +1,24 @@
-import { useState, useRef } from "react";
+import { useState, useRef, ReactElement, HtmlHTMLAttributes } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { UserContext } from "../../Functions/UserContext";
-import usePost from "../../Functions/usePost";
+import { UserContext } from "../../hooks/UserContext";
+import usePost from "../../hooks/usePost";
 import { Box, Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
-import LoginInput from '../../components/LoginInput.jsx'
+import LoginInput from '../../components/LoginInput'
 
 export const logado = false;
 
 const Login = () => {
-  const urlLogin = "https://api-todo-ckia.onrender.com/Login";
+  const urlLogin = "https://api-todo-ckia.onrender.com/user/login";
   const [usuario, setUsuario] = useState("");
   const [pass, setPass] = useState("");
   const { dataPost, httpConfigPost, loading, error } = usePost(urlLogin);
   const Navigate = useNavigate();
   const { setUser, setLogged } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: ReactElement<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!usuario || !pass) {
@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (dataPost && dataPost.message === "Success") {
+    if ( dataPost && dataPost.message === "Success") {
       setUser(dataPost);
       setLogged(true);
       Navigate('/');

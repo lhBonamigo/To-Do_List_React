@@ -1,8 +1,15 @@
 import React from 'react'
-import { Field } from "../components/ui/field.jsx";
+import { Field } from './ui/field';
 import { Input } from '@chakra-ui/react';
 
-const LoginInput = ({labelInput, value, onChange, type}) => {
+interface propFunc{
+    labelInput: string, 
+    value: string, 
+    onChange: (e: string) => void, 
+    type: string
+}
+
+const LoginInput = ({labelInput, value, onChange, type}: propFunc) => {
     return (
         <>
             <Field label={labelInput}>

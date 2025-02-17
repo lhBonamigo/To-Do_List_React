@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
-import usePost from "../../Functions/usePost.js";
-import { Field } from "../../components/ui/field.jsx";
+import usePost from '../../hooks/usePost.js';
+import { Field } from '../../components/ui/field.js';
 
-import { Button, Heading, Input, Flex, Text, List } from "@chakra-ui/react";
-import { UserContext } from "../../Functions/UserContext";
-import useDelete from "../../Functions/useDelete.js";
-import useGet from "../../Functions/useGet.js";
-import usePut from "../../Functions/usePut.js";
+import { Button, Heading, Input, Flex, Text, List } from '@chakra-ui/react';
+import { UserContext } from '../../hooks/UserContext.js';
+import useDelete from '../../hooks/useDelete.js';
+import useGet from '../../hooks/useGet.js';
+import usePut from '../../hooks/usePut.js';
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -15,10 +15,10 @@ const Home = () => {
   const [novaTarefa, setNovaTarefa] = useState("");
   const [deadline, setDeadline] = useState("0000-00-00");
   const [trigger, setTrigger] = useState(0);
-  const { httpConfigPut } = usePut('https://api-todo-ckia.onrender.com/Update');
-  const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/addTask');
-  const { httpConfigDel } = useDelete('https://api-todo-ckia.onrender.com/Delete');
-  const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/?id=${userID}`);
+  const { httpConfigPut } = usePut('https://api-todo-ckia.onrender.com/task/update');
+  const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
+  const { httpConfigDel } = useDelete('https://api-todo-ckia.onrender.com/task/delete');
+  const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -26,19 +26,32 @@ const Home = () => {
       setUserID(user.results[0].id);
     }
   }, [user]);
-  
-  useEffect(() => {
-    if (userID) {
-      httpConfigGet("GET");
-    }
-  }, [trigger, userID]);
 
-  useEffect(() => {
+  const orderTasks = () =>{
+    const checkedTask = tarefas.filter((task) => task.status === 1);
+    const unCheckedTask = tarefas.filter((tasks) => tasks.status != 1);
+
+    const ordened = [...unCheckedTask, ...checkedTask];
+    setTarefas(ordened);
+  }
+    useEffect(() => {
     if (dataGet) {
       setTarefas(dataGet);
     }
   }, [dataGet]);
 
+  useEffect(() => {
+    if (tarefas.length > 0) {
+      orderTasks(tarefas);
+    }
+  }, [tarefas]);
+
+  useEffect(() => {
+    if (userID) {
+      httpConfigGet("GET");
+    }
+  }, [trigger, userID]);
+  
   const adicionar1 = (e) => {
     e.preventDefault();
     if (!novaTarefa.trim()) return;
