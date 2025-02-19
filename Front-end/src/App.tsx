@@ -4,12 +4,13 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import { Provider } from "./components/ui/provider";
 import Cadastro from './pages/Cadastro/Cadastro';
-import UserContextProvider from './hooks/UserContext';
+import UserContextProvider from './Context/UserContext';
 import { Context, ReactElement, useContext } from 'react';
-import {UserContext} from './hooks/UserContext'
+import {UserContext} from './Context/UserContext'
+import { MycontextProps } from './Context/Interfaces';
 
 function AppRoutes() {
-  const { logged } = useContext(UserContext); 
+  const { logged } = useContext<MycontextProps>(UserContext); 
    return (
     <BrowserRouter>
       <Routes>

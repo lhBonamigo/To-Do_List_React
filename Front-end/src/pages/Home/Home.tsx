@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext, Ref } from "react";
 import usePost from '../../hooks/usePost.js';
 import { Field } from '../../components/ui/field.js';
 
 import { Button, Heading, Input, Flex, Text, List } from '@chakra-ui/react';
-import { UserContext } from '../../hooks/UserContext.js';
+import { UserContext } from '../../Context/UserContext';
 import useDelete from '../../hooks/useDelete.js';
 import useGet from '../../hooks/useGet.js';
 import usePut from '../../hooks/usePut.js';
+import { ITarefa } from "./Interface/ITarefa.js";
 
 const Home = () => {
   const { user } = useContext(UserContext);
   const [userID, setUserID] = useState(null);
-  const [tarefas, setTarefas] = useState([]);
+  const [tarefas, setTarefas] = useState<ITarefa[]>([]);
   const [novaTarefa, setNovaTarefa] = useState("");
   const [deadline, setDeadline] = useState("0000-00-00");
   const [trigger, setTrigger] = useState(0);
@@ -19,22 +20,23 @@ const Home = () => {
   const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
   const { httpConfigDel } = useDelete('https://api-todo-ckia.onrender.com/task/delete');
   const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (user && user.results && user.results[0]) {
+    if (user && user.results[0]) {
       setUserID(user.results[0].id);
     }
   }, [user]);
 
-  const orderTasks = () =>{
+  const orderTasks = () => {
     const checkedTask = tarefas.filter((task) => task.status === 1);
     const unCheckedTask = tarefas.filter((tasks) => tasks.status != 1);
 
     const ordened = [...unCheckedTask, ...checkedTask];
     setTarefas(ordened);
   }
-    useEffect(() => {
+
+  useEffect(() => {
     if (dataGet) {
       setTarefas(dataGet);
     }
@@ -42,7 +44,7 @@ const Home = () => {
 
   useEffect(() => {
     if (tarefas.length > 0) {
-      orderTasks(tarefas);
+      orderTasks();
     }
   }, [tarefas]);
 
@@ -51,7 +53,7 @@ const Home = () => {
       httpConfigGet("GET");
     }
   }, [trigger, userID]);
-  
+
   const adicionar1 = (e) => {
     e.preventDefault();
     if (!novaTarefa.trim()) return;
@@ -66,7 +68,7 @@ const Home = () => {
     }
   };
 
-  const remove = (tarefaParaRemover) => {
+  const remove = (tarefaParaRemover: ITarefa ) => {
     const filteredTarefas = tarefas.filter((tarefa) => tarefa.id !== tarefaParaRemover.id);
     setTarefas(filteredTarefas);
     setTrigger((prev) => prev + 1);
@@ -75,14 +77,14 @@ const Home = () => {
     httpConfigDel(task, "DELETE");
   };
 
-  const handleCheckboxChange = (id) => {
-    setTarefas((prevTarefas) => {
+  const handleCheckboxChange = (id: number) => {
+    setTarefas((prevTarefas: ITarefa[]) => {
       const novasTarefas = prevTarefas.map((tarefa) =>
         tarefa.id === id ? { ...tarefa, status: tarefa.status === 0 ? 1 : 0 } : tarefa
       );
-  
+
       const tarefaAtualizada = novasTarefas.find((tarefa) => tarefa.id === id);
-  
+
       if (tarefaAtualizada) {
         const body = {
           id,
@@ -90,7 +92,7 @@ const Home = () => {
         };
         httpConfigPut(body, "PUT");
       }
-  
+
       return novasTarefas;
     });
   };
@@ -140,7 +142,7 @@ const Home = () => {
 
       {tarefas.length > 0 ? (
         <List.Root>
-          {tarefas.map((tarefa, index) => (
+          {tarefas.map((tarefa: ITarefa, index) => (
             <List.Item key={index} w={"90vw"} maxW={`900px`} background={"lightblue"} pl={`.3em`} mb={".2em"} mt={".5"} display={"flex"} alignItems={"Center"}>
               <input
                 type="checkbox"

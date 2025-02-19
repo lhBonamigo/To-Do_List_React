@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
+import { MycontextProps, MyProviderProps } from "./Interfaces";
+export const UserContext = createContext({}as MycontextProps);
 
-export const UserContext = createContext();
-
-export const UserContextProvider = ({children}) =>{
+export const UserContextProvider = ({children}: MyProviderProps) =>{
     const [user, setUser] = useState({});
     const [logged, setLogged] = useState(false);
     return(
