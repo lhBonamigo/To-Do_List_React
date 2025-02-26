@@ -1,9 +1,9 @@
-import { useState, useRef, ReactElement, HtmlHTMLAttributes } from "react";
+import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../hooks/UserContext";
 import usePost from "../../hooks/usePost";
-import { Box, Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
+import { Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
 import LoginInput from '../../components/LoginInput'
 
 export const logado = false;
@@ -16,9 +16,8 @@ const Login = () => {
   const Navigate = useNavigate();
   const { setUser, setLogged } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
-  const ref = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: ReactElement<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!usuario || !pass) {
@@ -62,11 +61,11 @@ return (
       </Flex>
     </>) : (<>
       {errorMessage ? (<Text background={'red'} textAlign={'center'} position={'sticky'}>{errorMessage}</Text>) : (null)}
-      <Box w={'500px'} mx={'auto'} mt={'50px'}>
+      <Flex justify={'center'} alignContent={'center'} direction={"column"} mx={'auto'} >
         <Heading size={'3xl'} textAlign={'center'}>Faça login e registre suas tarefas agora mesmo!</Heading>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <Flex w={'100%'} direction={'column'} mt={'50px'}>
-            <LoginInput labelInput={"Usuário:"} value={usuario} onChange={setUsuario} />
+            <LoginInput labelInput={"Usuário:"} value={usuario} type={'text'} onChange={setUsuario} />
             <LoginInput labelInput={"Senha:"} value={pass} type={'password'} onChange={setPass} />
             <Flex w={'100%'} justify={'flex-end'}>
               <Button pl={'7px'} background={'gray'} mr={'5px'} mt={'.5em'} w={'90px'} onClick={() => Navigate('/Cadastro')} >Cadastrar</Button>
@@ -74,7 +73,7 @@ return (
             </Flex>
           </Flex>
         </form>
-      </Box >
+      </Flex >
     </>)}
   </>
 );

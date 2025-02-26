@@ -51,7 +51,7 @@ export const updateTask = asyncHandler(async(req, res)=>{
                 });
             }
 
-            if (results.affectedRows > 0) {
+            if ((results as any).affectedRows > 0) {
                 res.status(200).json({results });
             } else {
                 console.log(results)

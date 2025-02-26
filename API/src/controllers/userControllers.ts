@@ -18,7 +18,7 @@ export const registerUser = asyncHandler(async(req, res) => {
         })
 
     } catch (error) {
-        console.log("erro interno", error.message)
+        console.log("erro interno", error && (error as any).message)
         res.status(500).json({ erro: "erro interno do servidor" });
     }
 });
@@ -39,7 +39,7 @@ export const loginUser = asyncHandler(async(req, res) => {
                 });
             }
 
-            if (results.length > 0) {
+            if (Array.isArray(results) && results.length > 0) {
                 res.status(200).json({ message: 'Success', results });
             } else {
                 res.status(404).json({ error: 'Usuário ou senha incorretos' });
