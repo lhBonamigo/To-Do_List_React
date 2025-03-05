@@ -5,7 +5,6 @@ import { UserContext } from "../../hooks/UserContext";
 import usePost from "../../hooks/usePost";
 import { Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
 import LoginInput from '../../components/LoginInput'
-
 export const logado = false;
 
 const Login = () => {
