@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useContext, FormEvent } from "react";
+import { useEffect, useState, useRef, useContext, FormEvent } from "react";
 import usePost from '../../hooks/usePost.js';
 
 import { Button, Heading, Input, Flex, Text, List } from '@chakra-ui/react';
@@ -6,35 +6,33 @@ import { UserContext } from '../../hooks/UserContext.js';
 import useDelete from '../../hooks/useDelete.js';
 import useGet from '../../hooks/useGet.js';
 import usePut from '../../hooks/usePut.js';
-import { IPostbody, ITask } from "../../Interfaces/Interfaces.js";
+import { ITask } from "../../Interfaces/Interfaces.js";
 
 const Home = () => {
   const { user } = useContext(UserContext);
-  const [userID, setUserID] = useState(0);
+  const [userID, setUserID] = useState<number>(0);
   const [tarefas, setTarefas] = useState<ITask[]>([]);
   const [novaTarefa, setNovaTarefa] = useState("");
-  const [deadline, setDeadline] = useState("0000-00-00");
+  //const [deadline, setDeadline] = useState("0000-00-00");
   const [trigger, setTrigger] = useState(0);
   const { httpConfigPut } = usePut('https://api-todo-ckia.onrender.com/task/update');
   const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
   const { httpConfigDel } = useDelete('https://api-todo-ckia.onrender.com/task/delete');
   const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (user && user.results && user.results[0]) {
-      setUserID(user.results[0].id);
-    }
+    user && setUserID(user.id);
   }, [user]);
 
-  const orderTasks = () =>{
-    const checkedTask = tarefas.filter((task) => task.status === 1);
-    const unCheckedTask = tarefas.filter((tasks) => tasks.status != 1);
+  const orderTasks = () => {
+    const checkedTask = tarefas.filter((task: ITask) => task.status === 1);
+    const unCheckedTask = tarefas.filter((tasks: ITask) => tasks.status != 1);
 
     const ordened = [...unCheckedTask, ...checkedTask];
     setTarefas(ordened);
   }
-    useEffect(() => {
+  useEffect(() => {
     if (dataGet) {
       setTarefas(dataGet);
     }
@@ -51,12 +49,12 @@ const Home = () => {
       httpConfigGet("GET");
     }
   }, [trigger, userID]);
-  
-  const adicionar1 = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const adicionar1 = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!novaTarefa.trim()) return;
 
-    const task: IPostbody = { novaTarefa, deadline, userID, states: false };
+     const task = { novaTarefa, userID, states: false }; //deadline,
     httpConfigPost(task, "POST");
     setNovaTarefa("");
     setTrigger((trigger) => trigger + 1);
@@ -66,7 +64,7 @@ const Home = () => {
     }
   };
 
-  const remove = (tarefaParaRemover : ITask) => {
+  const remove = (tarefaParaRemover: ITask) => {
     const filteredTarefas = tarefas.filter((tarefa) => tarefa.id !== tarefaParaRemover.id);
     setTarefas(filteredTarefas);
     setTrigger((prev) => prev + 1);
@@ -77,12 +75,12 @@ const Home = () => {
 
   const handleCheckboxChange = (id: number) => {
     setTarefas((prevTarefas: ITask[]) => {
-      const novasTarefas = prevTarefas.map((tarefa: ITask) =>
+      const novasTarefas = prevTarefas.map((tarefa) =>
         tarefa.id === id ? { ...tarefa, status: tarefa.status === 0 ? 1 : 0 } : tarefa
       );
-  
+
       const tarefaAtualizada = novasTarefas.find((tarefa) => tarefa.id === id);
-  
+
       if (tarefaAtualizada) {
         const body = {
           id,
@@ -90,26 +88,25 @@ const Home = () => {
         };
         httpConfigPut(body, "PUT");
       }
-  
       return novasTarefas;
     });
   };
 
   return (
-    <Flex className="body">
-      {user && user.results && user.results[0] ? ( //alterar no back ta retornando um objeto deve retornar uma string simples
+    <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} mt={"2em"} mb={"2em"} w={"100%"} h={"100%"} className="home">
+      {user ? (
         <Heading size={"4xl"}>Minha lista de tarefas</Heading>
       ) : (
         <Heading size={"5xl"}>Carregando...</Heading>
       )}
 
-      <form onSubmit={adicionar1} className="form">
-        <Flex direction={"column"}>
-          <sup>Adicionar tarefa</sup>
+      <form onSubmit={adicionar1}>
+        <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>
+          <sup>Adicionar Tarefa</sup>
           <Input
             ref={ref}
             variant={"flushed"}
-            mb={"1em"}
+            mb={".5em"}
             required
             type="text"
             placeholder="Cozinhar Almoço"
@@ -134,6 +131,7 @@ const Home = () => {
           my={'auto'}
           mb={"2em"}
           className="submit-button"
+          bg={"white"}
         >
           +
         </Button>
@@ -141,7 +139,7 @@ const Home = () => {
 
       {tarefas.length > 0 ? (
         <List.Root>
-          {tarefas.map((tarefa : ITask, index) => (
+          {tarefas.map((tarefa: ITask, index) => (
             <List.Item key={index} w={"90vw"} maxW={`900px`} border={'1px solid white'} background={"transparent"} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
               <input
                 type="checkbox"

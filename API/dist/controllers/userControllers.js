@@ -35,7 +35,7 @@ export const loginUser = asyncHandler(async (req, res) => {
                 });
             }
             if (Array.isArray(results) && results.length > 0) {
-                res.status(200).json({ message: 'Success', results });
+                res.status(200).json(results[0]);
             }
             else {
                 res.status(404).json({ error: 'Usuário ou senha incorretos' });

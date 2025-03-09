@@ -32,7 +32,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if ( dataPost && dataPost.message === "Success") {
+    if ( dataPost) {
       setUser(dataPost);
       setLogged(true);
       Navigate('/');
@@ -59,10 +59,10 @@ return (
       </Flex>
     </>) : (<>
       {errorMessage ? (<Text background={'red'} textAlign={'center'} position={'sticky'}>{errorMessage}</Text>) : (null)}
-      <Flex direction={"column"}>
+      <Flex direction={"column"} mt={'50px'}>
         <Heading size={'3xl'} textAlign={'center'}>Faça login e registre suas tarefas agora mesmo!</Heading>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <Flex direction={'column'} mt={'50px'}>
+          <Flex direction={'column'} mt={'50px'} w={'30%'} maxWidth={'400px'} mx={'auto'}>
             <LoginInput labelInput={"Usuário:"} value={usuario} type={'text'} onChange={setUsuario} />
             <LoginInput labelInput={"Senha:"} value={pass} type={'password'} onChange={setPass} />
             <Flex w={'100%'} justify={'flex-end'}>

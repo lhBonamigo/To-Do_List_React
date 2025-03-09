@@ -1,15 +1,13 @@
-export interface IHead{
+export interface IHead {
     method: string;
-    headers:{ "Content-Type": string}; 
-    body?: string 
+    headers: { "Content-Type": string };
+    body?: string
 }
 
-export interface Iresponse{
-    message: string,
-    user:{
-        id: number,
-        name: string
-    }
+export interface Iresponse {
+    id: number,
+    user: string,
+    pass: string
 }
 
 export interface IPostbody {
@@ -17,11 +15,11 @@ export interface IPostbody {
     pass?: string
     novaTarefa?: string,
     deadline?: string,
-    userID?: number,
+    userID?: number | null,
     states?: boolean
 }
 
-export interface ITask{
+export interface ITask {
     id: number,
     task: string,
     status: boolean | number

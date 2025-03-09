@@ -5,7 +5,7 @@ import Login from './pages/Login/Login';
 import { Provider } from "./components/ui/provider";
 import Cadastro from './pages/Cadastro/Cadastro';
 import UserContextProvider from './hooks/UserContext';
-import { Context, ReactElement, useContext } from 'react';
+import { useContext } from 'react';
 import {UserContext} from './hooks/UserContext'
 
 function AppRoutes() {

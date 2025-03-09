@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactElement, FormEvent } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import { Box, Button, Heading, Text, Flex, ProgressCircle } from '@chakra-ui/react';
 import usePost from '../../hooks/usePost';
 import { useNavigate } from 'react-router-dom';

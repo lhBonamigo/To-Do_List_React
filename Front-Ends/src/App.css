@@ -3,6 +3,14 @@
     box-sizing: border-box;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
 .body{
     padding: 0;
     margin: 0;
@@ -15,13 +23,6 @@
 
 .modal{
     margin-right: 10px;
-}
-
-.form{
-    width: 90vw;
-    max-width: 900px;
-    display: flex;
-    flex-direction: row;
 }
 
 input[type="checkbox"]:checked + .text {
