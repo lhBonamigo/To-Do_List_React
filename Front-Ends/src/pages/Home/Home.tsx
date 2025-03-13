@@ -7,6 +7,7 @@ import useDelete from '../../hooks/useDelete.js';
 import useGet from '../../hooks/useGet.js';
 import usePut from '../../hooks/usePut.js';
 import { ITask } from "../../Interfaces/Interfaces.js";
+import Tabes from "../../components/Tabs/Tabs.js";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -136,7 +137,7 @@ const Home = () => {
           +
         </Button>
       </form>
-
+          <Tabes/>
       {tarefas.length > 0 ? (
         <List.Root>
           {tarefas.map((tarefa: ITask, index) => (

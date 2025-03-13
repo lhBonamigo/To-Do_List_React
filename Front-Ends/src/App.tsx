@@ -5,17 +5,20 @@ import Login from './pages/Login/Login';
 import { Provider } from "./components/ui/provider";
 import Cadastro from './pages/Cadastro/Cadastro';
 import UserContextProvider from './hooks/UserContext';
-import { useContext } from 'react';
-import {UserContext} from './hooks/UserContext'
+import { createLocalStorage, getLocalStorage } from './services/storage/localstorage';
+import { useEffect, useState } from 'react';
+
 
 function AppRoutes() {
-  const { logged } = useContext(UserContext); 
+  const Valid = getLocalStorage('Valid');
+
+  console.log(Valid); // Agora será atualizado corretamente
    return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={logged ? <Home /> : <Login />} />
+        <Route path='/' element={Valid ? <Home /> : <Login />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/*' element={<Login />} />
+        {/* <Route path='/*' element={<Login />} /> */}
         <Route path='/Cadastro' element={<Cadastro />} />
       </Routes>
     </BrowserRouter>
