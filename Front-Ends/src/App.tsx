@@ -5,9 +5,7 @@ import Login from './pages/Login/Login';
 import { Provider } from "./components/ui/provider";
 import Cadastro from './pages/Cadastro/Cadastro';
 import UserContextProvider from './hooks/UserContext';
-import { createLocalStorage, getLocalStorage } from './services/storage/localstorage';
-import { useEffect, useState } from 'react';
-
+import { getLocalStorage } from './services/storage/localstorage';
 
 function AppRoutes() {
   const Valid = getLocalStorage('Valid');

@@ -10,7 +10,9 @@ interface Item {
 }
 
 const items: Item[] = [
-  { id: "1", title: "Tab", content: "Tab Content" }
+  { id: "1", title: "No To-Do", content: "Tab Content" },
+  { id: "2", title: "Para Estudar", content: "Tab Content" },
+  { id: "3", title: "Documentação para Ler", content: "Tab Content" },
 ]
 
 const uuid = () => {
@@ -84,12 +86,7 @@ const Tabes = () => {
               {item.content} {item.id}
             </Heading>
             <Text>
-              Dolore ex esse laboris elit magna esse sunt. Pariatur in veniam
-              Lorem est occaecat do magna nisi mollit ipsum sit adipisicing
-              fugiat ex. Pariatur ullamco exercitation ea qui adipisicing. Id
-              cupidatat aute id ut excepteur exercitation magna pariatur. Mollit
-              irure irure reprehenderit pariatur eiusmod proident Lorem deserunt
-              duis cillum mollit.
+              {/* .map com todo as tasks da aba */}
             </Text>
           </Tabs.Content>
         ))}

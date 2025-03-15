@@ -8,6 +8,7 @@ import useGet from '../../hooks/useGet.js';
 import usePut from '../../hooks/usePut.js';
 import { ITask } from "../../Interfaces/Interfaces.js";
 import Tabes from "../../components/Tabs/Tabs.js";
+import { getLocalStorage } from "../../services/storage/localstorage.js";
 
 const Home = () => {
   const { user } = useContext(UserContext);
@@ -23,6 +24,10 @@ const Home = () => {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    if(!user){
+      const id = getLocalStorage("id");
+      setUserID(Number(id));
+    }
     user && setUserID(user.id);
   }, [user]);
 
@@ -95,11 +100,7 @@ const Home = () => {
 
   return (
     <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} mt={"2em"} mb={"2em"} w={"100%"} h={"100%"} className="home">
-      {user ? (
         <Heading size={"4xl"}>Minha lista de tarefas</Heading>
-      ) : (
-        <Heading size={"5xl"}>Carregando...</Heading>
-      )}
 
       <form onSubmit={adicionar1}>
         <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>

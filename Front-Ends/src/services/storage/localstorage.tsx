@@ -11,3 +11,7 @@ export function changeLocalStorage(key: string, value: boolean){
 export function createLocalStorage(){
     storage.setItem("Valid",'false');
 }
+
+export function insertUserId(key: string, value: string){
+    storage.setItem(key, value);
+}

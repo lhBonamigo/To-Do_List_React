@@ -5,7 +5,7 @@ import { UserContext } from "../../hooks/UserContext";
 import usePost from "../../hooks/usePost";
 import { Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
 import LoginInput from '../../components/LoginInput/LoginInput'
-import { changeLocalStorage } from "../../services/storage/localstorage";
+import { changeLocalStorage, insertUserId } from "../../services/storage/localstorage";
 
 const Login = () => {
   const urlLogin = "https://api-todo-ckia.onrender.com/user/login";
@@ -34,6 +34,7 @@ const Login = () => {
   useEffect(() => {
     if (dataPost) {
       changeLocalStorage('Valid', true);
+      insertUserId('id', dataPost.id.toString());
       setUser(dataPost);
       setLogged(true);
       navigate('/');
