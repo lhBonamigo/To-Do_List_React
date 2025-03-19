@@ -2,6 +2,7 @@ import { Button, Flex, Input } from '@chakra-ui/react'
 import { Props, Task } from './ClassTask'
 import { FormEvent, useRef, useState } from 'react';
 import usePost from '../../hooks/usePost';
+import LoginInput from '../LoginInput/LoginInput';
 
 const TskBar = () => {
     const [novaTarefa, setNovaTarefa] = useState("");
@@ -15,7 +16,7 @@ const TskBar = () => {
         if (!novaTarefa.trim()) return;
     
         const task = new Task(); 
-        httpConfigPost(task, "POST");
+        //httpConfigPost(task, "POST");
         setNovaTarefa("");
     
         if (ref.current) {
@@ -23,20 +24,12 @@ const TskBar = () => {
         }
     }
     return (
-        <form onSubmit={adicionar1}>
-            <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>
-                <sup>Adicionar Tarefa</sup>
-                <Input
-                    ref={ref}
-                    variant={"flushed"}
-                    mb={".5em"}
-                    required
-                    type="text"
-                    placeholder="Cozinhar Almoço"
-                    value={novaTarefa}
-                    onChange={(e) => setNovaTarefa(e.target.value)}
-                />
-            </Flex>
+        <form onSubmit={adicionar1}>    
+            <LoginInput labelInput={"Tarefa"} onChange={setNovaTarefa} type={"Text"} value={novaTarefa}/>
+            <LoginInput labelInput={"Tempo Estimado"} onChange={setNovaTarefa} type={"Number"}/>
+            <LoginInput labelInput={"Repetições"} onChange={setNovaTarefa} type={"Number"}/>
+            <LoginInput labelInput={"Data Limite"} onChange={setNovaTarefa} type={"Date"}/>
+            {/* <LoginInput labelInput={""} onChange={setNovaTarefa} type={"Text"}/> */}
             <Button
                 type="submit"
                 value="Adicionar"
@@ -50,46 +43,6 @@ const TskBar = () => {
             >
                 +
             </Button>
-            <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>
-                <sup>Data Limite</sup>
-                <Input
-                    type="date"
-                    variant={"flushed"}
-                    value={deadline}
-                    onChange={(e) => setDeadline(e.target.value)}
-                    className="deadline-input"
-                />
-                <Flex>
-                    <sup>Hora:</sup>
-                    <Input
-                        type="time"
-                        variant={"flushed"}
-                        value={deadline}
-                        onChange={(e) => setDeadline(e.target.value)}
-                        className="deadline-input"
-                    />
-                </Flex>
-            </Flex>
-            <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>
-                <sup>Tempo Estimado:</sup>
-                <Input
-                    type="timer"
-                    variant={"flushed"}
-                    value={deadline}
-                    onChange={(e) => setDeadline(e.target.value)}
-                    className="deadline-input"
-                />
-            </Flex>
-            <Flex direction={"column"} w={"90vw"} maxW={`900px`} mb={"2em"}>
-                <sup>Repetições:</sup>
-                <Input
-                    type="Number"
-                    variant={"flushed"}
-                    value={deadline}
-                    onChange={(e) => setDeadline(e.target.value)}
-                    className="deadline-input"
-                />
-            </Flex>
         </form>
     )
 }

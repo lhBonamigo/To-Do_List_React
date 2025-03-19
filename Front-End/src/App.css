@@ -9,6 +9,8 @@ form{
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    width: 50vw;
+    border: 1px solid white;
 }
 
 .body{
