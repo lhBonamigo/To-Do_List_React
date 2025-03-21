@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
+import { Task } from '../components/TaskBar/ClassTask';
 
 export const usePut = (url: string) => {
-    const [dataPost, setData] = useState(null);
+    const [dataPut, setData] = useState(null);
     const [config, setConfig] = useState<{ method: string; headers: { "Content-Type": string }; body: string } | null>(null);
     const [method, setMethod] = useState<string|null>(null);
     const [error, setError] = useState(null);
 
-    const httpConfigPut = (body :any, method :string) => {
+    const httpConfigPut = (body :Task, method :string) => {
         if (method === 'PUT') {
             setConfig({
                 method,
@@ -18,7 +19,6 @@ export const usePut = (url: string) => {
             setMethod(method);
         }
     };
-
 
     // Requisição POST, PUT ou DELETE
     useEffect(() => {
@@ -41,7 +41,7 @@ export const usePut = (url: string) => {
         };
         httpRequest();
     }, [config, method, url]);
-    return { dataPost, httpConfigPut, error };
+    return { dataPut, httpConfigPut, error };
 };
 
 export default usePut

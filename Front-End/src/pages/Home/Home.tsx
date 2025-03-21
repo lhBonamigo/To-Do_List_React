@@ -8,8 +8,8 @@ const Home = () => {
   return (
     <Flex direction={"column"} alignItems={"center"} justifyContent={"center"} mt={"2em"} mb={"2em"} w={"100%"} h={"100%"} className="home">
       <Heading size={"4xl"}>Minha lista de tarefas</Heading>
-       <TskBar/>
-      {/*<Tabes/>*/}
+      <TskBar/>
+      <Tabes/>
       <Footer/> 
     </Flex>
   );

@@ -9,18 +9,21 @@ const TskBar = () => {
     const [novaTarefa, setNovaTarefa] = useState("");
     const [deadline, setDeadline] = useState<Date>();
     const [repetitions, setRepetitions] = useState<number>();
-    const [estimedTime, setEstmedTime] = useState<number>()
+    const [estimedTime, setEstmedTime] = useState<number>();
+    const [tabNumber, setTabNumber] = useState<number>(0);
     const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
     const ref = useRef<HTMLInputElement>(null);
     const [idUser, setIdUser] = useState<number>(0)
 
     
     const adicionar1 = (e: FormEvent<HTMLFormElement>) => {
+
+        //BUSCAR NO CONTEXTO A TAB ATUAL PARA SALVAR CORRETO DE ACORDO//////////
         setIdUser(Number(getLocalStorage("id")))
         e.preventDefault();
         if (!novaTarefa.trim()) return;
 
-        const task = new Task(idUser,novaTarefa, 0, deadline, repetitions, estimedTime);
+        const task = new Task(idUser,novaTarefa, 0, tabNumber, deadline, repetitions, estimedTime);
         httpConfigPost(task, "POST");
         setNovaTarefa("");
 
