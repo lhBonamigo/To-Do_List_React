@@ -2,7 +2,7 @@ export class Task{
     id: number;
     status: number;
     content: string;
-    tab_task: boolean|number;
+    tab_task: number;
     clock?: number;
     deadline?: Date;
     Repetitions?: number;

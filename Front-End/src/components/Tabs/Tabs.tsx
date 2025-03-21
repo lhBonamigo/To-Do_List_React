@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Button, CloseButton, Heading, List, Tabs, Text } from "@chakra-ui/react"
+import { Button, CloseButton, Heading, Input, List, Tabs, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { LuPlus } from "react-icons/lu"
 import useGet from '../../hooks/useGet'
@@ -8,6 +8,9 @@ import { UserContext } from '../../hooks/UserContext.js';
 import useDelete from '../../hooks/useDelete.js'
 import usePut from '../../hooks/usePut.js'
 import { Task } from '../TaskBar/ClassTask.js'
+import { Tab } from './classTab.js'
+import { MdDone, MdDoneAll } from 'react-icons/md'
+import { PiPencil } from 'react-icons/pi'
 
 const uuid = () => {
   return Math.random().toString(36).substring(2, 15)
@@ -19,9 +22,12 @@ const Tabes = () => {
   const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
   const { dataDel, httpConfigDel } = useDelete(`https://api-todo-ckia.onrender.com/task/Delete}`);
   const { dataPut, httpConfigPut } = usePut(`https://api-todo-ckia.onrender.com/task/Update}`);
-  const [tabs, setTabs] = useState<Task[]>(tarefas)
-  const [selectedTab, setSelectedTab] = useState<string | null>(tarefas[0].tab_task.toString())
+  const [tabs, setTabs] = useState<Tab[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>('')
   const { user } = useContext(UserContext);
+  const [tabId, setTabID] = useState<number>(1);
+  const [tabName, setTabName] = useState<string>('geral');
+  const [tabDescription, setTabDescription] = useState<string>('tudo misturado');
     
     useEffect(() => {
       if (!user) {
@@ -84,22 +90,20 @@ const Tabes = () => {
     });
   };
   const addTab = () => {
+    if(!tabName) return
     const newTabs = [...tabs]
 
-    const uid = uuid()
-
-    newTabs.push({
-      id: 1,
-      title: `Tab`,
-      content: `Tab Body`,
-    })
+    newTabs.push(new Tab(tabId, tabName, tabDescription))
 
     setTabs(newTabs)
-    setSelectedTab(newTabs[newTabs.length - 1].id)
+    setSelectedTab(newTabs[newTabs.length - 1].id.toString())
+    setTabName('');
+    setTabDescription('');
+    setTabID(tabId + 1);
   }
 
   const removeTab = (id: number) => {
-    if (tabs.length > 1) {
+    if (tabs && tabs.length > 1) {
       const newTabs = [...tabs].filter((tab) => tab.id !== id)
       setTabs(newTabs)
     }
@@ -113,9 +117,9 @@ const Tabes = () => {
       onValueChange={(e) => setSelectedTab(e.value)}
     >
       <Tabs.List flex="1 1 auto">
-        {tabs.map((tarefa) => (
-          <Tabs.Trigger value={tarefa.content} key={tarefa.id}>
-            {tarefa.tab_task}{" "}
+        {tabs && tabs.map((tab) => (
+          <Tabs.Trigger value={tab.id.toString()} key={tab.id}>
+            {tab.name}{" "} 
             <CloseButton
               as="span"
               role="button"
@@ -123,7 +127,7 @@ const Tabes = () => {
               me="-2"
               onClick={(e) => {
                 e.stopPropagation()
-                removeTab(tarefa.id)
+                removeTab(tab.id)
               }}
             />
           </Tabs.Trigger>
@@ -131,44 +135,51 @@ const Tabes = () => {
         <Button
           alignSelf="center"
           ms="2"
-          size="2xs"
-          variant="ghost"
+          size="sm"
+          variant="outline"
           onClick={addTab}
+          w={'150px'}
         >
-          <LuPlus /> Add Tab
+          <LuPlus /> {/* ABRIR UM FLUTUANTE COM iNPUT PARA iNSERIR O TEXTO*/}
         </Button>
       </Tabs.List>
 
       <Tabs.ContentGroup>
-        {tabs.map((item: Task) => (
-          <Tabs.Content value={item.content} key={item.id}>
+        {tabs && tabs.map((tab: Tab) => (
+          <Tabs.Content value={tab.id.toString()} key={tab.id}>
             <Heading size="xl" my="6">
-              {// item.content} {item.id}
-}
+               {tab.description} {tab.id}
             </Heading>
             <Text>
-              {tarefas.length > 0 ? (
+               {tarefas.length > 0 ? (
                 <List.Root>
-                  {tarefas.map((tarefa: Task, index) => (
-                    <List.Item key={index} w={"90vw"} maxW={`900px`} border={'1px solid white'} background={"transparent"} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
+                  {tarefas.map((task: Task, index) => (
+                    task.tab_task.toString() === selectedTab ? (
+                    <>
+                      <List.Item key={index} w={"90vw"} maxW={`900px`} border={'1px solid white'} background={"transparent"} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
                       <input
                         type="checkbox"
-                        checked={tarefa.status === 1 ? true : false}
-                        onChange={() => handleCheckboxChange(tarefa.id)}
+                        checked={task.status === 1 ? true : false}
+                        onChange={() => handleCheckboxChange(task.id)}
                       />
                       <Text className="text" w={"100%"} ml={".5em"}>
-                        {tarefa.content}
+                        {task.content}
                       </Text>
-                      <Button variant={"solid"} alignSelf={"end"} className="buttonX" onClick={() => remove(tarefa)}>
+                       <Button variant={"solid"} alignSelf={"start"} className="buttonV" > { /*onClick={} criar a função deeditar a task do mesmo modo no modal */}
+                        <PiPencil/>
+                      </Button>
+                      <Button variant={"solid"} alignSelf={"end"} className="buttonX" onClick={() => remove(task)}>
                         X
                       </Button>
+                      
                     </List.Item>
+                    </>): (null)
                   ))}
                 </List.Root>
               ) : (
                 <p className="no-tasks">Nenhuma tarefa adicionada ainda.</p>
               )}
-              {/* .map com todo as tasks da aba */}
+              {/* .map com todo as tasks da aba  */}
             </Text>
           </Tabs.Content>
         ))}
@@ -176,5 +187,4 @@ const Tabes = () => {
     </Tabs.Root>
   )
 }
-
 export default Tabes

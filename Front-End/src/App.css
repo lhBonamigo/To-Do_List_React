@@ -56,6 +56,18 @@ input[type="checkbox"]:checked + .text {
     border: 2px none aliceblue;
 }
 
+.buttonV{
+    background-color: transparent;
+    color: aliceblue;
+    border: 2px none aliceblue;
+    &:hover{
+        scale: 0.7;
+        transition: 0.7s; 
+        border: 1px solid lime;
+        color: lime;
+    }
+}
+
 .buttonX:hover{
     scale: 0.7;
     transition: 0.7s; 
