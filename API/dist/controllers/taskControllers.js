@@ -18,17 +18,16 @@ export const getTasks = asyncHandler(async (req, res) => {
 });
 export const addTask = asyncHandler(async (req, res) => {
     try {
-        const { novaTarefa, deadline, userID, states } = req.body;
-        if (!novaTarefa) {
+        const { content, tab_task, repetitions, estimatedTime, deadline, status, id } = req.body;
+        if (!content) {
             res.status(400);
         }
-        const sql = "INSERT INTO task(task, deadline, user_id, status) VALUES (?, ?, ?, ?)";
-        pool.query(sql, [novaTarefa, deadline, userID, states], (err, results) => {
+        const sql = "INSERT INTO task(content, deadline, user_id, status, tab_task, repetitions, hours) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        pool.query(sql, [content, deadline, id, status, tab_task, repetitions, estimatedTime], (err, results) => {
             if (err) {
-                console.log("erro de query nas tasks:", err);
                 return res.status(500).json({ erro: err });
             }
-            return res.status(200).json({ sucess: "Task Adicionada" });
+            return res.status(201).json({ sucess: "Tarefa Criada" });
         });
     }
     catch (error) {
@@ -38,11 +37,10 @@ export const addTask = asyncHandler(async (req, res) => {
 });
 export const updateTask = asyncHandler(async (req, res) => {
     try {
-        const { id, status } = req.body;
-        const sql = "UPDATE task SET status = ? WHERE id = ?;";
-        pool.query(sql, [status, id], (err, results) => {
+        const { content, tab_task, repetitions, estimatedTime, deadline, status, id } = req.body;
+        const sql = "UPDATE task SET status = ?, content = ?, deadline = ?, tab_task = ?, repetitions = ?, hours = ? WHERE id = ?;";
+        pool.query(sql, [status, content, deadline, tab_task, repetitions, estimatedTime, id], (err, results) => {
             if (err) {
-                console.error('Erro ao executar a query:', err);
                 return res.status(500).json({ error: 'Erro no servidor',
                     results
                 });

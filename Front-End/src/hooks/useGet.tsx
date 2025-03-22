@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
+import { Task } from '../components/TaskBar/ClassTask';
 
 export const useGet = (url:string) => {
-  const [dataGet, setData] = useState(null);
+  const [dataGet, setData] = useState<Task[]>([]);
   const [config, setConfig] = useState<IHead|null>(null);
   const [method, setMethod] = useState<string|null>(null);
   const [error, setError] = useState(null);
@@ -34,7 +35,7 @@ export const useGet = (url:string) => {
         setError(null);
       } catch (err:any) {
         setError(err.message);
-        setData(null);
+        setData([]);
       }
     };
     httpRequest();

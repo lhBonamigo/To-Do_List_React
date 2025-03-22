@@ -17,7 +17,6 @@ const TskBar = () => {
 
     
     const adicionar1 = (e: FormEvent<HTMLFormElement>) => {
-
         //BUSCAR NO CONTEXTO A TAB ATUAL PARA SALVAR CORRETO DE ACORDO//////////
         setIdUser(Number(getLocalStorage("id")))
         e.preventDefault();

@@ -5,7 +5,7 @@ export const usePut = (url: string) => {
     const [dataPut, setData] = useState(null);
     const [config, setConfig] = useState<{ method: string; headers: { "Content-Type": string }; body: string } | null>(null);
     const [method, setMethod] = useState<string|null>(null);
-    const [error, setError] = useState(null);
+    const [errorPut, setError] = useState<string>('');
 
     const httpConfigPut = (body :Task, method :string) => {
         if (method === 'PUT') {
@@ -30,10 +30,13 @@ export const usePut = (url: string) => {
                 res = await fetch(url, config);
 
 
-                if (!res.ok) throw new Error(`Erro: ${res.status}`);
+                if (!res.ok) {
+                    setError(res.toString());    
+                    throw new Error(`Erro: ${res.status}`);
+                };
                 const json = await res.json();
                 setData(json);
-                setError(null);
+                setError('');
             } catch (err: any) {
                 setError(err.message);
                 setData(null);
@@ -41,7 +44,7 @@ export const usePut = (url: string) => {
         };
         httpRequest();
     }, [config, method, url]);
-    return { dataPut, httpConfigPut, error };
+    return { dataPut, httpConfigPut, errorPut };
 };
 
 export default usePut

@@ -10,8 +10,6 @@ form{
     align-items: center;
     margin-top: 20px;
     width: 50vw;
-   
-    
     gap: .3em;
     padding: 0 10px 0 10px;
 }
@@ -50,10 +48,17 @@ input[type="checkbox"]:checked + .text {
     color: aliceblue;
     width: 250px;
 }
+
 .buttonX{
     background-color: transparent;
     color: aliceblue;
     border: 2px none aliceblue;
+    &:hover{
+        scale: 0.7;
+        transition: 0.7s; 
+        border: 1px solid red;
+        color: red;
+    }
 }
 
 .buttonV{
@@ -68,9 +73,14 @@ input[type="checkbox"]:checked + .text {
     }
 }
 
-.buttonX:hover{
-    scale: 0.7;
-    transition: 0.7s; 
-    border: 1px solid red;
-    color: red;
+.Notification{
+    width: 100vh;
+    height: 25px;
+    background-color: lime;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
 }
