@@ -20,12 +20,12 @@ interface UserContextType {
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [tarefas, setTarefas] = useState<Task[]>([]);
     const [userID, setUserID] = useState<number>(0);
-    const { dataGet, httpConfigGet } = useGet(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
+    const { dataGet, httpConfigGet } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
     const { httpConfigPut, dataPut, errorPut } = usePut(`https://api-todo-ckia.onrender.com/task/update`);
     const [notification, setNotification] = useState<string>('');
 
     useEffect(() => {
-        setTarefas(dataGet)
+        setTarefas(dataGet ? dataGet : [])
         if (tarefas.length > 0) {
             orderTasks();
         }

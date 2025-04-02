@@ -39,6 +39,7 @@ const Tabes = () => {
     });
   };
 
+
   const addTab = () => {
     //if (!tabName) return
     const newTabs = [...tabs]
