@@ -14,34 +14,21 @@ const Cadastro = () => {
     const { httpConfigPost, error, dataPost, loading } = usePost(url);
 
     const createUser = (e: FormEvent<HTMLFormElement>) => {
+        
         e.preventDefault();
-        if (!usuario || !pass || !confirmPass) {
-            setErrorMessage("Por favor, preencha todos os campos.");
-            return;
-        };
-
-        if (pass !== confirmPass) {
-            setErrorMessage("As Senhas precisam ser iguais.");
-            return;
-        };
-
-        if (pass.length < 6) {
-            setErrorMessage("A senha precisa 6 caracteres, no mínimo");
-            return;
-        };
+        if (!usuario || !pass || !confirmPass) return setErrorMessage("Por favor, preencha todos os campos.");
+        if (pass.length < 6) return setErrorMessage("A senha precisa 6 caracteres, no mínimo");
+        if (pass !== confirmPass) return setErrorMessage("As Senhas precisam ser iguais.");
 
         const user = {
             usuario,
             pass,
         };
-
         httpConfigPost(user, "POST");
     };
 
     useEffect(() => {
         if (error) {
-            console.log(error)
-            console.log(error)
             alert("Usuário Inválido ou em uso")
             setUsuario('');
         }

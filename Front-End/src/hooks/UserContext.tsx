@@ -3,6 +3,7 @@ import { Task } from "../components/TaskBar/ClassTask";
 import { getLocalStorage } from "../services/storage/localstorage";
 import useGet from "./useGet";
 import usePut from "./usePut";
+import { Tab } from "../components/Tabs/classTab";
 
 export const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -14,18 +15,22 @@ interface UserContextType {
     tarefas: Task[],
     setTarefas: Dispatch<SetStateAction<Task[]>>,
     httpConfigPut: (body: Task, method: string)=> void,
-    notification:string
+    notification:string,
+    tabsData: Tab[]|null|undefined
 }
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const [tarefas, setTarefas] = useState<Task[]>([]);
     const [userID, setUserID] = useState<number>(0);
-    const { dataGet, httpConfigGet } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
+    const { dataGet: taskData , httpConfigGet: configTask } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
     const { httpConfigPut, dataPut, errorPut } = usePut(`https://api-todo-ckia.onrender.com/task/update`);
     const [notification, setNotification] = useState<string>('');
+    const {dataGet: tabsData, httpConfigGet: configData} = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/task/tabs?id=${userID}`);
 
     useEffect(() => {
-        setTarefas(dataGet ? dataGet : [])
+        configData('GET');
+
+        setTarefas(taskData ? taskData : [])
         if (tarefas.length > 0) {
             orderTasks();
         }
@@ -34,14 +39,14 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setTimeout(function() {
             setNotification('')
         }, 3000);
-    }, [dataGet, dataPut]);
+    }, [taskData, dataPut, tabsData]);
 
     useEffect(() => {
         if (!userID) {
             const id = getLocalStorage("id");
             setUserID(Number(id));
         }
-        httpConfigGet("GET");
+        configTask("GET");
     }, [userID]);
 
     const orderTasks = () => {
@@ -52,7 +57,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setTarefas(ordened);
     }
     return (
-        <UserContext.Provider value={{ tarefas, setTarefas, httpConfigPut, notification }}>
+        <UserContext.Provider value={{ tarefas, setTarefas, httpConfigPut, notification, tabsData }}>
             {children}
         </UserContext.Provider>
     );

@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react'
-import { IHead, Iresponse } from '../Interfaces/Interfaces';
-import { Task } from '../components/TaskBar/ClassTask';
+import { IHead } from '../Interfaces/Interfaces';
 
-export const usePost = (url: string) => {
-    const [dataPost, setData] = useState<Iresponse|null>(null);
+export function usePost<T>(url: string){
+    const [dataPost, setData] = useState<T|null>(null);
     const [config, setConfig] = useState<IHead|null>(null);
     const [method, setMethod] = useState<string|null>(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const httpConfigPost = (body:Task, method: string) => {
+    const httpConfigPost = (body:any, method: string) => {
         setLoading(true);
         if (method === 'POST') {
             setConfig({

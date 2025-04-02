@@ -75,3 +75,19 @@ export const deleteTask = asyncHandler(async (req, res) => {
         res.status(500).json({ erro: "Erro de servidor" });
     }
 });
+export const getTabs = asyncHandler(async (req, res) => {
+    try {
+        const { id } = req.query;
+        const sql = "SELECT * FROM tabs WHERE user_id = ?;";
+        pool.query(sql, [id], (err, results) => {
+            if (err) {
+                res.status(500).json({ erro: "erro de banco de dados" });
+            }
+            res.status(200).send(results);
+        });
+    }
+    catch (error) {
+        console.log("erro de servidor", error);
+        res.status(500).send({ erro: "erro de servidor" });
+    }
+});

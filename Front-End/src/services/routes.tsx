@@ -16,8 +16,8 @@ function AppRoutes() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={Valid ? <Home /> : <Login />} />
-          <Route path='/login' element={<Login />} />
-          {/* <Route path='/*' element={<Login />} /> */}
+          <Route path='/login' element={Valid ? <Home /> : <Login />} />
+          <Route path='/*' element={Valid ? <Home /> : <Login />} />
           <Route path='/Cadastro' element={<Cadastro />} />
         </Routes>
       </BrowserRouter>

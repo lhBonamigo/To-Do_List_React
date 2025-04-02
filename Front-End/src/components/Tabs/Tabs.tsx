@@ -11,13 +11,13 @@ import React from 'react';
 
 const Tabes = () => {
   
-  const [tabs, setTabs] = useState<Tab[]>([]);
   const [selectedTab, setSelectedTab] = useState<string>('')
-  const { tarefas, setTarefas, httpConfigPut } = useContext(UserContext);
+  const { tarefas, setTarefas, httpConfigPut, tabsData } = useContext(UserContext);
+  const [tabs, setTabs] = useState<Tab[]>(tabsData ? tabsData : []);
   const [tabId, setTabID] = useState<number>(1);
   const [tabName, setTabName] = useState<string>('geral');
   const [tabDescription, setTabDescription] = useState<string>('tudo misturado');
-
+  
   const handleCheckboxChange = (id: number) => {
     setTarefas((prevTarefas: Task[]) => {
       const novasTarefas = prevTarefas.map((tarefa) =>
@@ -38,7 +38,6 @@ const Tabes = () => {
       return novasTarefas;
     });
   };
-
 
   const addTab = () => {
     //if (!tabName) return
