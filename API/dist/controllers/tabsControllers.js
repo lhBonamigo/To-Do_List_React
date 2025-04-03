@@ -3,7 +3,6 @@ import pool from '../config/database.js';
 export const addTabs = asyncHandler(async (req, res) => {
     try {
         const { name, description, user_id } = req.body;
-        console.log(name, description, user_id);
         if (!name || !user_id) {
             res.status(400).json({ erro: "Nome da Tab é obrigatório" });
         }

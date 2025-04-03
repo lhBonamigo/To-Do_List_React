@@ -12,7 +12,7 @@ export const useDelete = (url: string) => {
     const [itemId, setItemId] = useState<IBody>();
     const [error, setError] = useState(null);
 
-    const httpConfigDel = (body: IBody, method: string) => {
+    const httpConfigDel = (method: string, body?: IBody) => {
         if (method === 'DELETE') {
             setConfig({
                 method,

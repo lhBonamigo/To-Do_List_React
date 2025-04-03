@@ -1,7 +1,6 @@
-import { useContext } from 'react'
-import { Button, CloseButton, Heading, List, Tabs, Text } from "@chakra-ui/react"
+import { useContext, useEffect } from 'react'
+import { Button, Heading, List, Tabs, Text } from "@chakra-ui/react"
 import { useState } from "react"
-import { LuPlus } from "react-icons/lu"
 import { UserContext } from '../../hooks/UserContext.js';
 import { Task } from '../TaskBar/ClassTask.js'
 import { Tab } from './classTab.js'
@@ -10,12 +9,18 @@ import EditeDialog from '../popover/EditDialog.js';
 import React from 'react';
 import AddTabDialog from '../popover/AddTabDialog.js';
 import { PiPencil } from 'react-icons/pi';
+import DeleteTabDialog from '../popover/DeleteTabDialog.js';
 
 const Tabes = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>('')
-  const { tarefas, setTarefas, httpConfigPut, tabsData, httpConfigPost } = useContext(UserContext);
+  const { tarefas, setTarefas, httpConfigPut, tabsData } = useContext(UserContext);
   const [tabs, setTabs] = useState<Tab[]>(tabsData ? tabsData : []);
+
+
+  useEffect(() => {
+    setTarefas(tarefas)
+  },[tarefas]);
 
   const handleCheckboxChange = (id: number) => {
     setTarefas((prevTarefas: Task[]) => {
@@ -38,12 +43,6 @@ const Tabes = () => {
     });
   };
 
-  const removeTab = (id: number) => {
-    if (tabs && tabs.length > 1) {
-      const newTabs = [...tabs].filter((tab) => tab.id !== id)
-      setTabs(newTabs)
-    }
-  }
 
   return (
     <Tabs.Root
@@ -57,18 +56,9 @@ const Tabes = () => {
           <Tabs.Trigger value={tab.id.toString()} key={tab.id}>
             {tab.name}{" "}
             <Button size={'sm'} animation={"0.3s"} variant="outline" className="buttonV">
-              <PiPencil color='white'/>
+              <PiPencil color='white' />
             </Button>
-            <CloseButton
-              as="span"
-              role="button"
-              size="2xs"
-              me="-2"
-              onClick={(e) => {
-                e.stopPropagation()
-                removeTab(tab.id)
-              }}
-            />
+            <DeleteTabDialog id={tab.id}/>
           </Tabs.Trigger>
         ))}
         <AddTabDialog />

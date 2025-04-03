@@ -13,6 +13,9 @@ const AddTabDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addTab = () => {
+    setIsOpen(false);
+    setTabName('');
+    setTabDescription('');
     if (!tabName) return
 
     const tab = new Tab(tabName, Number(localStorage.getItem('id')), tabDescription)
