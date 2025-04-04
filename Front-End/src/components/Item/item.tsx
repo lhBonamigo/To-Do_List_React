@@ -10,7 +10,6 @@ interface Iprops {
 }
 const item = ({ task }: Iprops) => {
     const { setTarefas, taskUpdate, Getget } = useContext(UserContext);
-
     const handleCheckboxChange = (id: number) => {
         setTarefas((prevTarefas: Task[]) => {
             const novasTarefas = prevTarefas.map((tarefa) =>
@@ -29,8 +28,8 @@ const item = ({ task }: Iprops) => {
                     repetitions: tarefaAtualizada.Repetitions,
                 };
                 taskUpdate(body, "PUT");
-                Getget()
             }
+            Getget()
             return novasTarefas;
         });
         Getget()
@@ -51,5 +50,4 @@ const item = ({ task }: Iprops) => {
         </>
     )
 }
-
 export default item

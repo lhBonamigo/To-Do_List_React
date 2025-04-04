@@ -21,6 +21,9 @@ interface UserContextType {
     tabs: Tab[],
     httpConfigPost: (body: Tab, method: string)=> void,
     Getget: () => void
+    selectedTab: string,
+    setSelectedTab: Dispatch<SetStateAction<string>>,
+    userID: number,
 }
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
@@ -34,6 +37,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const {dataGet: tabsData, httpConfigGet: configData} = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs?id=${userID}`);
     const { httpConfigPost, errorPost} = usePost<Tab>('https://api-todo-ckia.onrender.com/tabs/add');
     const [counter, setCounter] = useState<number>(0);
+    const [selectedTab, setSelectedTab] = useState<string>('0');
 
     useEffect(() => {
         setTarefas(taskData ? taskData : [])
@@ -68,12 +72,11 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const orderTasks = () => {
         const checkedTask = tarefas.filter((task: Task) => task.status === 1);
         const unCheckedTask = tarefas.filter((tasks: Task) => tasks.status != 1);
-
         const ordened = [...unCheckedTask, ...checkedTask];
         setTarefas(ordened);
     }
     return (
-        <UserContext.Provider value={{ tarefas, setTarefas, taskUpdate, tabsUpdate, notification, tabs, httpConfigPost, Getget }}>
+        <UserContext.Provider value={{ tarefas, userID, setTarefas, selectedTab, setSelectedTab, taskUpdate, tabsUpdate, notification, tabs, httpConfigPost, Getget }}>
             {children}
         </UserContext.Provider>
     );

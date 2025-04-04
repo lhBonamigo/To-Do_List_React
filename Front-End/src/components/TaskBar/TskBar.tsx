@@ -1,34 +1,32 @@
 import { Button, Flex } from '@chakra-ui/react'
 import { Task } from './ClassTask'
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useContext, useRef, useState } from 'react';
 import usePost from '../../hooks/usePost';
 import LoginInput from '../LoginInput/LoginInput';
-import { getLocalStorage } from '../../services/storage/localstorage';
 import { MdAddTask } from 'react-icons/md';
+import {UserContext} from '../../hooks/UserContext';
 
 const TskBar = () => {
     const [novaTarefa, setNovaTarefa] = useState("");
     const [deadline, setDeadline] = useState<Date>();
     const [repetitions, setRepetitions] = useState<number>();
     const [estimedTime, setEstmedTime] = useState<number>();
-    const [tabNumber, setTabNumber] = useState<number>(0);
     const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
     const ref = useRef<HTMLInputElement>(null);
-    const [idUser, setIdUser] = useState<number>(0);
+    const {selectedTab, userID, Getget} = useContext(UserContext);
 
     const adicionar1 = (e: FormEvent<HTMLFormElement>) => {
-        setIdUser(Number(getLocalStorage("id")))
         e.preventDefault();
         if (!novaTarefa.trim()) return;
-        getLocalStorage("idtab") ? setTabNumber(Number(getLocalStorage("idt"))) : setTabNumber(0)
 
-        const task = new Task(idUser, novaTarefa, 0, tabNumber, deadline, repetitions, estimedTime);
+        const task = new Task(userID, novaTarefa, 0, Number(selectedTab), deadline, repetitions, estimedTime);
         httpConfigPost(task, "POST");
         setNovaTarefa("");
 
         if (ref.current) {
             ref.current.focus();
         }
+        Getget()
     }
 
     return (

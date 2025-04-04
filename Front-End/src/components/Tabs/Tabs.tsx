@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { Heading, List, Tabs, Text } from "@chakra-ui/react"
+import { Flex, Heading, List, ProgressCircle, Tabs, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { UserContext } from '../../hooks/UserContext.js';
 import { Task } from '../TaskBar/ClassTask.js'
@@ -9,16 +9,14 @@ import AddTabDialog from '../popover/AddTabDialog.js';
 import DeleteTabDialog from '../popover/DeleteTabDialog.js';
 import EditTabDialog from '../popover/EditTabDialog.js';
 import Item from '../Item/item';
-import { changeLocalStorageTab } from '../../services/storage/localstorage.js';
 
 const Tabes = () => {
+  const { tarefas, setTarefas, tabs, setSelectedTab:set2 } = useContext(UserContext);
+  const [selectedTab, setSelectedTab] = useState<string>(tabs && tabs[0]?.id.toString());
 
-  const { tarefas, setTarefas, tabs} = useContext(UserContext);
-  const [selectedTab, setSelectedTab] = useState<string>(tabs[0]?.id.toString());
-  
-  useEffect(() => {
-    setTarefas(tarefas)
-  },[tarefas]);
+  // useEffect(() => {
+  //   setTarefas(tarefas)
+  // }, [tarefas]);
 
   return (
     <Tabs.Root
@@ -27,27 +25,25 @@ const Tabes = () => {
       size="sm"
       onValueChange={(e: any) => {
         setSelectedTab(e.value);
-        changeLocalStorageTab("Tab", selectedTab);
-        console.log("selectedTab", selectedTab);
+        set2(e.value);
       }}
-
     >
       <Tabs.List flex="1 1 auto">
         {tabs && tabs.map((tab: Tab) => (
           <Tabs.Trigger value={tab.id.toString()} key={tab.id}>
             {tab.name}{"  "}
-            <EditTabDialog tabe={tab}/>
-            <DeleteTabDialog id={tab.id}/>
+            <EditTabDialog tabe={tab} />
+            <DeleteTabDialog id={tab.id} />
           </Tabs.Trigger>
         ))}
         <AddTabDialog />
       </Tabs.List>
 
       <Tabs.ContentGroup>
-        {tabs && tabs.map((tab: Tab) => (
+        {tabs.length > 0 ? (tabs.map((tab: Tab) => (
           <Tabs.Content value={tab.id.toString()} key={tab.id}>
             <Heading size="xl" my="6">
-              {tab.description? tab.description : null}
+              {tab.description ? tab.description : null}
             </Heading>
             <Text>
               {tarefas.length > 0 ? (
@@ -56,7 +52,7 @@ const Tabes = () => {
                     task.tab_task.toString() === selectedTab ? (
                       <React.Fragment key={task.id}>
                         <List.Item h={'50px'} border={'1px solid white'} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
-                          <Item task={task}/>
+                          <Item task={task} />
                         </List.Item>
                       </React.Fragment>) : (null)
                   ))}
@@ -64,10 +60,18 @@ const Tabes = () => {
               ) : (
                 <p className="no-tasks">Nenhuma tarefa adicionada ainda.</p>
               )}
-              {/* .map com todo as tasks da aba  */}
             </Text>
           </Tabs.Content>
-        ))}
+        ))) : (
+          <Flex textAlign={'center'} justifyContent={'center'} alignItems={'center'} pt={"20%"}>
+            <ProgressCircle.Root value={null} size="xl">
+              <ProgressCircle.Circle>
+                <ProgressCircle.Track />
+                <ProgressCircle.Range />
+              </ProgressCircle.Circle>
+            </ProgressCircle.Root>
+          </Flex>
+        )}
       </Tabs.ContentGroup>
     </Tabs.Root>
   )
