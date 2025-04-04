@@ -8,6 +8,10 @@ export function changeLocalStorage(key: string, value: boolean){
     storage.setItem(key, JSON.stringify(value));
 }
 
+export function changeLocalStorageTab(key: string, value: string){
+    storage.setItem(key, JSON.stringify(value));
+}
+
 export function createLocalStorage(){
     storage.setItem("Valid",'false');
 }

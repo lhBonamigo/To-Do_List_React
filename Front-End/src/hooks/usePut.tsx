@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Task } from '../components/TaskBar/ClassTask';
+import { Tab } from '../components/Tabs/classTab';
 
-export const usePut = (url: string) => {
-    const [dataPut, setData] = useState(null);
+export function usePut<T>(url: string){
+    const [dataPut, setData] = useState<T|null>(null);
     const [config, setConfig] = useState<{ method: string; headers: { "Content-Type": string }; body: string } | null>(null);
     const [method, setMethod] = useState<string|null>(null);
     const [errorPut, setError] = useState<string>('');
 
-    const httpConfigPut = (body :Task, method :string) => {
+    const httpConfigPut = (body :Task|Tab, method :string) => {
         if (method === 'PUT') {
             setConfig({
                 method,

@@ -40,9 +40,9 @@ export const addTask = asyncHandler(async(req, res) => {
 
 export const updateTask = asyncHandler(async(req, res)=>{
     try {
-        const {content, tab_task, repetitions, estimatedTime, deadline, status, id} = req.body;
+        const {content, tab_task, repetitions, hours, deadline, status, id} = req.body;
         const sql = "UPDATE task SET status = ?, content = ?, deadline = ?, tab_task = ?, repetitions = ?, hours = ? WHERE id = ?;"
-        pool.query(sql, [status, content, deadline, tab_task, repetitions, estimatedTime, id], (err, results)=>{
+        pool.query(sql, [status, content, deadline, tab_task, repetitions, hours, id], (err, results)=>{
             if (err) {
                 return res.status(500).json({ error: 'Erro no servidor',
                     results

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
 
 interface IBody {
-    id: number
+    id: number|string
 }
 
 export const useDelete = (url: string) => {

@@ -1,62 +1,42 @@
 import { useContext, useEffect } from 'react'
-import { Button, Heading, List, Tabs, Text } from "@chakra-ui/react"
+import { Heading, List, Tabs, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { UserContext } from '../../hooks/UserContext.js';
 import { Task } from '../TaskBar/ClassTask.js'
 import { Tab } from './classTab.js'
-import DeleteDialog from '../popover/DeleteDialog.js'
-import EditeDialog from '../popover/EditDialog.js';
 import React from 'react';
 import AddTabDialog from '../popover/AddTabDialog.js';
-import { PiPencil } from 'react-icons/pi';
 import DeleteTabDialog from '../popover/DeleteTabDialog.js';
+import EditTabDialog from '../popover/EditTabDialog.js';
+import Item from '../Item/item';
+import { changeLocalStorageTab } from '../../services/storage/localstorage.js';
 
 const Tabes = () => {
 
-  const [selectedTab, setSelectedTab] = useState<string>('')
-  const { tarefas, setTarefas, httpConfigPut, tabs, Getget } = useContext(UserContext);
- 
+  const { tarefas, setTarefas, tabs} = useContext(UserContext);
+  const [selectedTab, setSelectedTab] = useState<string>(tabs[0]?.id.toString());
+  
   useEffect(() => {
     setTarefas(tarefas)
   },[tarefas]);
-
-  const handleCheckboxChange = (id: number) => {
-    setTarefas((prevTarefas: Task[]) => {
-      const novasTarefas = prevTarefas.map((tarefa) =>
-        tarefa.id === id ? { ...tarefa, status: tarefa.status === 0 ? 1 : 0 } : tarefa
-      );
-
-      const tarefaAtualizada = novasTarefas.find((tarefa) => tarefa.id === id);
-
-      if (tarefaAtualizada) {
-        const body = {
-          id,
-          status: tarefaAtualizada.status,
-          content: tarefaAtualizada.content,
-          tab_task: tarefaAtualizada.id
-        };
-        httpConfigPut(body, "PUT");
-      }
-      return novasTarefas;
-    });
-    Getget()
-  };
-
 
   return (
     <Tabs.Root
       value={selectedTab}
       variant="outline"
       size="sm"
-      onValueChange={(e:any) => setSelectedTab(e.value)}
+      onValueChange={(e: any) => {
+        setSelectedTab(e.value);
+        changeLocalStorageTab("Tab", selectedTab);
+        console.log("selectedTab", selectedTab);
+      }}
+
     >
       <Tabs.List flex="1 1 auto">
         {tabs && tabs.map((tab: Tab) => (
           <Tabs.Trigger value={tab.id.toString()} key={tab.id}>
-            {tab.name}{" "}
-            <Button size={'sm'} animation={"0.3s"} variant="outline" className="buttonV">
-              <PiPencil color='white' />
-            </Button>
+            {tab.name}{"  "}
+            <EditTabDialog tabe={tab}/>
             <DeleteTabDialog id={tab.id}/>
           </Tabs.Trigger>
         ))}
@@ -67,7 +47,7 @@ const Tabes = () => {
         {tabs && tabs.map((tab: Tab) => (
           <Tabs.Content value={tab.id.toString()} key={tab.id}>
             <Heading size="xl" my="6">
-              {tab.description} {tab.id}
+              {tab.description? tab.description : null}
             </Heading>
             <Text>
               {tarefas.length > 0 ? (
@@ -75,18 +55,8 @@ const Tabes = () => {
                   {tarefas.map((task: Task) => (
                     task.tab_task.toString() === selectedTab ? (
                       <React.Fragment key={task.id}>
-                        <List.Item key={task.id} w={"90vw"} maxW={`900px`} border={'1px solid white'} background={"transparent"} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
-                          <input
-                            type="checkbox"
-                            checked={task.status === 1 ? true : false}
-                            onChange={() => handleCheckboxChange(task.id)}
-                          />
-                          <Text className="text" w={"100%"} ml={".5em"}>
-                            {task.content}
-                          </Text>
-                          <EditeDialog tarefa={task} />
-                          <DeleteDialog tarefa={task} />
-
+                        <List.Item h={'50px'} border={'1px solid white'} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
+                          <Item task={task}/>
                         </List.Item>
                       </React.Fragment>) : (null)
                   ))}
