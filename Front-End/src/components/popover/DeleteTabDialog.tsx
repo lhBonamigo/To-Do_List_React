@@ -1,4 +1,4 @@
-import { Button, CloseButton, Dialog, Icon, Portal } from "@chakra-ui/react";
+import { Button, Dialog, Portal } from "@chakra-ui/react";
 import useDelete from "../../hooks/useDelete";
 import { useContext, useState } from "react";
 import { UserContext } from "../../hooks/UserContext";

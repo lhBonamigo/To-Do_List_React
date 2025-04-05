@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { Flex, Heading, List, ProgressCircle, Tabs, Text } from "@chakra-ui/react"
 import { useState } from "react"
 import { UserContext } from '../../hooks/UserContext.js';
@@ -11,7 +11,7 @@ import EditTabDialog from '../popover/EditTabDialog.js';
 import Item from '../Item/item';
 
 const Tabes = () => {
-  const { tarefas, setTarefas, tabs, setSelectedTab:set2 } = useContext(UserContext);
+  const { tarefas, tabs, setSelectedTab:set2 } = useContext(UserContext);
   const [selectedTab, setSelectedTab] = useState<string>(tabs && tabs[0]?.id.toString());
 
   // useEffect(() => {

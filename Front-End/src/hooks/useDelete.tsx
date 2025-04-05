@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
 
-interface IBody {
-    id: number|string
-}
-
-export const useDelete = (url: string) => {
+export function useDelete<T>(url: string) {
     const [dataDel, setData] = useState(null);
     const [config, setConfig] = useState<IHead|null>(null);
     const [method, setMethod] = useState<string|null>(null);
-    const [itemId, setItemId] = useState<IBody>();
+    const [itemId, setItemId] = useState<T>();
     const [error, setError] = useState(null);
 
-    const httpConfigDel = (method: string, body?: IBody) => {
+    const httpConfigDel = (method: string, body?: T) => {
         if (method === 'DELETE') {
             setConfig({
                 method,

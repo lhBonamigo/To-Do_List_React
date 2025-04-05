@@ -61,6 +61,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         }
         configTask("GET");
         configData("GET");
+        orderTasks()
     }, [userID, counter]);
 
     const Getget = () => {
