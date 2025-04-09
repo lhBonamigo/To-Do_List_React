@@ -3,8 +3,12 @@ import * as taskService from '../services/tasksService.js';
 export const getTasks = asyncHandler(async (req, res) => {
     try {
         const { id } = req.query;
-        await taskService.getTasks(Number(id));
-        res.status(200).json({ success: "Tarefas encontradas com sucesso" });
+        if (!id) {
+            res.status(400).json({ erro: "ID do usuário não pode ser vazio" });
+            return;
+        }
+        const tarefas = await taskService.getTasks(Number(id));
+        res.status(200).json({ tarefas });
     }
     catch (error) {
         res.status(500).send({ erro: "Erro de servidor" });
