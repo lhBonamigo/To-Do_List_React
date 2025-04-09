@@ -1,22 +1,22 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import * as tabService from '../services/tabService.js';
 
-export const addTab = async (req: Request, res: Response) => {
+export const addTab: RequestHandler = async (req, res) => {
     try {
       const { name, description, user_id } = req.body;
-      if (!name || !user_id) return res.status(400).json({ erro: "Campos obrigatórios" });
+      if (!name || !user_id) res.status(400).json({ erro: "Campos obrigatórios" });
   
       await tabService.createTab({ name, description, user_id });
-      res.status(201).json({ success: "Tab criada com sucesso" });
+       res.status(201).json({ success: "Tab criada com sucesso" });
     } catch (err) {
-      res.status(500).json({ erro: "Erro ao criar tab", err });
+       res.status(500).json({ erro: "Erro ao criar tab", err });
     }
 };
 
-export const updateTabs = async (req: Request, res: Response)=>{
+export const updateTabs: RequestHandler = async (req, res) =>{
     try {
         const { name, description, user_id, id } = req.body;
-        if (!name || !description) return res.status(400).json({ erro: "Campos obrigatórios" });
+        if (!name || !description) res.status(400).json({ erro: "Campos obrigatórios" });
 
         await tabService.updateTab({ name, description, user_id }, Number(id));
         res.status(200).json({ success: "Tab atualizada com sucesso" });
@@ -25,10 +25,10 @@ export const updateTabs = async (req: Request, res: Response)=>{
     }
 }
 
-export const deleteTabs = async (req: Request, res: Response) =>{
+export const deleteTabs: RequestHandler = async (req, res) =>{
     try{
         const { id } = req.query;
-        if(!id) return res.status(400).json({erro: "Id obrigatório"});
+        if(!id) res.status(400).json({erro: "Id obrigatório"});
         await tabService.deleteTabs(Number(id));
         res.status(200).json({success: "Tab deletada com sucesso"});
     }catch(err){
@@ -36,10 +36,10 @@ export const deleteTabs = async (req: Request, res: Response) =>{
     }
 }
 
-const getTabs = async (req: Request, res: Response) => {
+export const getTabs: RequestHandler = async (req, res) => {
     try {
         const { id } = req.query;
-        if (!id) return res.status(400).json({ erro: "Id obrigatório" });
+        if (!id) res.status(400).json({ erro: "Id obrigatório" });
         const tabs = await tabService.getTabs(Number(id));
         res.status(200).json(tabs);
     } catch (err) {
