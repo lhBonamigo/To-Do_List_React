@@ -14,9 +14,11 @@ const DeleteTabDialog = ({ id }: IpropComp) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const remove = () => {
-    httpConfigDel("DELETE");
+    console.log("id", id)
+    httpConfigDel();
+    console.log("id", id)
     setIsOpen(false);
-    Getget()
+    //Getget()
   }
 
   return (
@@ -40,7 +42,7 @@ const DeleteTabDialog = ({ id }: IpropComp) => {
               <Dialog.ActionTrigger asChild>
                 <Button variant="outline" onClick={() => setIsOpen(false)}>Cancelar</Button>
               </Dialog.ActionTrigger>
-              <Button colorPalette="red" onClick={() => remove()}>Excluir</Button>
+              <Button colorPalette="red" onClick={remove}>Excluir</Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>

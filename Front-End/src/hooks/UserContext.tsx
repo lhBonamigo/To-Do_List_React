@@ -52,7 +52,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setTimeout(function() {
             setNotification('')
         }, 3000);
-    }, [taskData, taskDataPut, tabsDataPut, errorPost]);
+    }, [taskData, taskDataPut, tabsDataPut, errorPost, counter]);
 
     useEffect(() => {
         if (!userID) {
