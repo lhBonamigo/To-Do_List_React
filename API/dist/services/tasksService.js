@@ -13,7 +13,7 @@ export const getTasks = async (id) => {
 export const createTask = async (task) => {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO task(content, deadline, user_id, status, tab_task, repetitions, hours) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        pool.query(sql, [task.content, task.deadline, task.id, task.status, task.tab_task, task.repetitions, task.estimatedTime], (err, results) => {
+        pool.query(sql, [task.content, task.deadline, task.user_id, task.status, task.tab_task, task.repetitions, task.estimatedTime], (err, results) => {
             if (err)
                 reject(err);
             else

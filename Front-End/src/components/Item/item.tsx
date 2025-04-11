@@ -8,6 +8,7 @@ import { Text } from '@chakra-ui/react'
 interface Iprops {
     task: Task
 }
+
 const item = ({ task }: Iprops) => {
     const { setTarefas, taskUpdate, Getget } = useContext(UserContext);
     
