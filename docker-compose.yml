@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api: 
+    build: ./API
+    container_name: minha_api
+    ports:
+      - "9090:3000"
+    volumes:
+      - ./API:app
+      - /app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - minha-rede
+
+  mongodb:
+    image: mongo
+    container_name: meu-mongo 
+    ports:
+      - "27017:27017"
+    networks:
+      - minha-rede
+networks:
+  minha-rede:
