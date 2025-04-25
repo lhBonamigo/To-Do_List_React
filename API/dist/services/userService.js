@@ -12,7 +12,7 @@ export const registerUser = async (usuario, pass) => {
 };
 export const loginUser = async (usuario, pass) => {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM logins WHERE usuario = ? AND pass = ?";
+        const sql = "SELECT * FROM logins WHERE user = ? AND pass = ?";
         pool.query(sql, [usuario, pass], (err, results) => {
             if (err)
                 reject(err);
