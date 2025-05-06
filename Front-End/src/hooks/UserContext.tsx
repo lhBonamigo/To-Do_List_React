@@ -5,6 +5,7 @@ import useGet from "./useGet";
 import usePut from "./usePut";
 import { Tab } from "../components/Tabs/classTab";
 import usePost from "./usePost";
+import useDelete from "./useDelete";
 
 export const UserContext = createContext<UserContextType>({} as UserContextType);
 
@@ -25,6 +26,7 @@ interface UserContextType {
     userID: number,
     setTabs: Dispatch<SetStateAction<Tab[]>>,
     orderTasks: () => void,
+    httpConfigDel: (url : string)=> void
 }
 
 export const UserContextProvider = ({ children }: UserContextProviderProps) => {
@@ -38,6 +40,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const { dataGet: tabsData, httpConfigGet: configData } = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs?id=${userID}`);
     const { httpConfigPost, errorPost } = usePost<Tab>('https://api-todo-ckia.onrender.com/tabs/add');
     const [selectedTab, setSelectedTab] = useState<string>('0');
+    const { httpConfigDel } = useDelete();
 
     useEffect(() => {
         setTarefas(taskData ? taskData : [])
@@ -77,7 +80,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setTarefas(ordened);
     }
     return (
-        <UserContext.Provider value={{ tarefas, userID, setTarefas, selectedTab, setSelectedTab, taskUpdate, tabsUpdate, notification, tabs, setTabs, httpConfigPost, orderTasks }}>
+        <UserContext.Provider value={{ tarefas, userID, setTarefas, selectedTab, setSelectedTab, taskUpdate, tabsUpdate, notification, tabs, setTabs, httpConfigPost, orderTasks, httpConfigDel }}>
             {children}
         </UserContext.Provider>
     );

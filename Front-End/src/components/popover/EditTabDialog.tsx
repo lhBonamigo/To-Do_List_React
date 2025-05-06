@@ -10,7 +10,7 @@ interface IpropComp {
 }
 
 const EditeTabDialog = ({ tabe }: IpropComp) => {
-  const { tabsUpdate, Getget } = useContext(UserContext);
+  const { tabsUpdate } = useContext(UserContext);
   const [name, setName] = useState(tabe.name);
   const [description, setDescription] = useState(tabe.description);
 
@@ -25,7 +25,6 @@ const EditeTabDialog = ({ tabe }: IpropComp) => {
     };
     tabsUpdate(tab, "PUT")
     setIsOpen(false)
-    Getget()
   };
 
   return (

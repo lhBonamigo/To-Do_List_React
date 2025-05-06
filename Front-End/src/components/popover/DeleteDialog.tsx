@@ -2,7 +2,6 @@ import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react"
 import { useContext } from "react";
 import { UserContext } from "../../hooks/UserContext";
 import { Task } from "../TaskBar/ClassTask";
-import useDelete from "../../hooks/useDelete";
 import { BiTaskX } from "react-icons/bi";
 
 interface IpropComp {
@@ -10,13 +9,12 @@ interface IpropComp {
 }
 
 const DeleteDialog = ({ tarefa }: IpropComp) => {
-  const { tarefas, setTarefas } = useContext(UserContext);
-  const { httpConfigDel } = useDelete(`https://api-todo-ckia.onrender.com/task/delete?id=${tarefa.id}`);
-
-  const remove = (tarefaParaRemover: Task) => {
-    const filteredTarefas = tarefas.filter((tarefa: Task) => tarefa.id !== tarefaParaRemover.id);
+  const { tarefas, setTarefas, httpConfigDel} = useContext(UserContext);
+  
+  const remove = (id: number) => {
+    const filteredTarefas = tarefas.filter((tarefa: Task) => tarefa.id !== id);
+    httpConfigDel(`https://api-todo-ckia.onrender.com/task/delete?id=${tarefa.id}`);
     setTarefas(filteredTarefas);
-    httpConfigDel();
   };
 
   return (
@@ -44,7 +42,7 @@ const DeleteDialog = ({ tarefa }: IpropComp) => {
                 <Button variant="outline">Cancelar</Button>
               </Dialog.ActionTrigger>
               <Dialog.ActionTrigger asChild>
-                <Button colorPalette="red" onClick={() => remove(tarefa)}>Excluir</Button>
+                <Button colorPalette="red" onClick={() => remove(tarefa.id)}>Excluir</Button>
               </Dialog.ActionTrigger>
             </Dialog.Footer>
           </Dialog.Content>

@@ -10,7 +10,7 @@ interface IpropComp {
 }
 
 const EditeDialog = ({ tarefa }: IpropComp) => {
-  const { taskUpdate, Getget } = useContext(UserContext);
+  const { taskUpdate } = useContext(UserContext);
   const [content, setNovaTarefa] = useState(tarefa.content);
   const [deadline, setDeadline] = useState<Date | undefined>(tarefa.deadline);
   const [repetitions, setRepetitions] = useState<number | undefined>(tarefa.Repetitions);
@@ -30,7 +30,6 @@ const EditeDialog = ({ tarefa }: IpropComp) => {
     };
     taskUpdate(task, "PUT")
     setIsOpen(false)
-    Getget()
   };
 
   return (
@@ -56,7 +55,6 @@ const EditeDialog = ({ tarefa }: IpropComp) => {
                 <LoginInput labelInput="Data Limite" type={'Date'} value={deadline?.toString()} onChange={setDeadline} />
                 <LoginInput labelInput="Tab" type={'select'} value={tabNumber} onChange={setTabNumber} />
               </Flex>
-              {/* ADICIONAR TODOS OS INPUTS REFERENTES A TASK AQUI */}
             </Dialog.Body>
             <Dialog.Footer p={'1.5em'}>
               <Dialog.ActionTrigger asChild>

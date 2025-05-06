@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
 
-export function useDelete(url: string) {
+export function useDelete() {
     const [dataDel, setData] = useState(null);
     const [options, setOptions] = useState<IHead | null>(null);
-    const [trigger, setTrigger] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [url, setUrl] = useState<string | null>(null);
 
-    const httpConfigDel = () => {
+    const httpConfigDel = (url: string) => {
+        setUrl(url)
         setOptions({
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json"
             }
         });
-        setTrigger(true); // Dispara a requisição
     };
 
     useEffect(() => {
+        console.log(url)
         const httpRequest = async () => {
-            if (!options || !trigger) return;
+            if (!options || !url) return;
 
             try {
                 const res = await fetch(url, options);
@@ -31,12 +32,10 @@ export function useDelete(url: string) {
                 setError(err.message);
                 setData(null);
             } finally {
-                setTrigger(false); // Resetar o trigger
             }
         };
-
         httpRequest();
-    }, [options, trigger, url]);
+    }, [options]);
 
     return { dataDel, httpConfigDel, error };
 }

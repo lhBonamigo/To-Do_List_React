@@ -18,13 +18,14 @@ const Tabes = () => {
       value={selectedTab}
       variant="outline"
       size="sm"
+      w={{base:"200px", sm: "400px", md: "700px", lg:"900px"}}
       onValueChange={(e: any) => {
         setSelectedTab(e.value);
       }}
     >
-      <Tabs.List flex="1 1 auto">
+      <Tabs.List flex="1 1 auto" overflowX={"scroll"} h={"80px"} mt={"10px"}>
         {tabs && tabs.map((tab: Tab) => (
-          <Tabs.Trigger value={tab.id.toString()} key={tab.id}>
+          <Tabs.Trigger value={tab.id.toString()} key={tab.id} h={{base:"60px"}} minW={"150px"} mx={"4px"}>
             {tab.name}{"  "}
             <EditTabDialog tabe={tab} />
             <DeleteTabDialog tabToRemove={tab} />
@@ -39,13 +40,13 @@ const Tabes = () => {
             <Heading size="xl" my="6">
               {tab.description ? tab.description : null}
             </Heading>
-            <Text>
+            <Flex direction={"column"}>
               {tarefas?.length > 0 ? (
                 <List.Root>
                   {tarefas?.map((task: Task) => (
                     task.tab_task.toString() === selectedTab ? (
                       <React.Fragment key={task.id}>
-                        <List.Item h={'50px'} border={'1px solid white'} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
+                        <List.Item border={'1px solid white'} w={{base:"250px", sm: "400px", md: "700px", lg:"900px"}} py={'.7em'} pl={`.3em`} mt={".5em"} display={"flex"} alignItems={"Center"}>
                           <Item task={task} />
                         </List.Item>
                       </React.Fragment>) : (null)
@@ -54,7 +55,7 @@ const Tabes = () => {
               ) : (
                 <Text className="no-tasks">Nenhuma tarefa adicionada ainda.</Text>
               )}
-            </Text>
+            </Flex>
           </Tabs.Content>
         ))) : (
           <Flex textAlign={'center'} justifyContent={'center'} alignItems={'center'} pt={"20%"}>
