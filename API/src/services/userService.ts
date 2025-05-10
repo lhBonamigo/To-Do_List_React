@@ -4,9 +4,10 @@ import * as bcrypt from "bcrypt";
 
 export const registerUser = async (usuario: string, pass: string) => {
     const passHash = await bcrypt.hash(pass, 8);
+    console.log(passHash)
     return new Promise((resolve, reject) => {
-        const sql = "INSERT INTO logins value(?, ?, ?)"
-        pool.query(sql, ["id", usuario, passHash], (err, results) => {
+        const sql = "INSERT INTO logins (user, pass) VALUES (?, ?)"
+        pool.query(sql, [usuario, passHash], (err, results) => {
             if (err) reject(err)
             else resolve(results)
         })
@@ -16,6 +17,7 @@ export const registerUser = async (usuario: string, pass: string) => {
 export const loginUser = async (usuario: string, pass: string) => {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM logins WHERE user = ?";
+
         pool.query(sql, [usuario], async (err, results) => {
             const rows = results as RowDataPacket[];
             if (err) return reject(err);
@@ -23,6 +25,7 @@ export const loginUser = async (usuario: string, pass: string) => {
 
             const user = rows[0];
             const senhaCorreta = await bcrypt.compare(pass, user.pass);
+            console.log(senhaCorreta);
             if (!senhaCorreta) return reject("Senha incorreta");
 
             resolve(user);

@@ -22,7 +22,7 @@ export const loginUser: RequestHandler = asyncHandler(async(req, res, next: Next
         if (!usuario || !pass) {
             res.status(400).json({ "erro": "usuário e senha requeridas" })
         }
-        await userService.loginUser(usuario, pass)
+        await userService.loginUser(usuario, pass);
         res.status(200).json({ message: "usuário logado com sucesso" })
     } catch (error) {
         next(error)
