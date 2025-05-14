@@ -1,19 +1,18 @@
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react"
 import { useContext, useState } from "react";
-import { UserContext } from "../../hooks/UserContext";
 import { PiPencil } from "react-icons/pi";
 import LoginInput from "../LoginInput/LoginInput";
 import { Tab } from "../Tabs/classTab";
+import { TabContext } from "../../context/TabContext";
 
 interface IpropComp {
   tabe: Tab
 }
 
 const EditeTabDialog = ({ tabe }: IpropComp) => {
-  const { tabsUpdate } = useContext(UserContext);
+  const { updateTab } = useContext(TabContext);
   const [name, setName] = useState(tabe.name);
   const [description, setDescription] = useState(tabe.description);
-
   const [isOpen, setIsOpen] = useState(false);
 
   const Update = (tabToAtualize: Tab) => {
@@ -23,8 +22,8 @@ const EditeTabDialog = ({ tabe }: IpropComp) => {
       id: tabToAtualize.id,
       user_id: tabToAtualize.user_id,
     };
-    tabsUpdate(tab, "PUT")
-    setIsOpen(false)
+    updateTab(tab);
+    setIsOpen(false);
   };
 
   return (

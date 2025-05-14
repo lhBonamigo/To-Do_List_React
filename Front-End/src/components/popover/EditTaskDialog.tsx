@@ -1,16 +1,17 @@
 import { Button, CloseButton, Dialog, Flex, Portal } from "@chakra-ui/react"
 import { useContext, useState } from "react";
-import { UserContext } from "../../hooks/UserContext";
+import { UserContext } from "../../context/UserContext";
 import { Task } from "../TaskBar/ClassTask";
 import { PiPencil } from "react-icons/pi";
 import LoginInput from "../LoginInput/LoginInput";
+import { TaskContext } from "../../context/TaskContext";
 
 interface IpropComp {
   tarefa: Task
 }
 
 const EditeDialog = ({ tarefa }: IpropComp) => {
-  const { taskUpdate } = useContext(UserContext);
+  const { updateTask } = useContext(TaskContext);
   const [content, setNovaTarefa] = useState(tarefa.content);
   const [deadline, setDeadline] = useState<Date | undefined>(tarefa.deadline);
   const [repetitions, setRepetitions] = useState<number | undefined>(tarefa.Repetitions);
@@ -28,8 +29,8 @@ const EditeDialog = ({ tarefa }: IpropComp) => {
       status: taskToAtualize.status,
       tab_task: tabNumber,
     };
-    taskUpdate(task, "PUT")
-    setIsOpen(false)
+    updateTask(task);
+    setIsOpen(false);
   };
 
   return (

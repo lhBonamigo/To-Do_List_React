@@ -3,23 +3,22 @@ import { useContext, useState } from "react";
 
 import LoginInput from "../LoginInput/LoginInput";
 import { Tab } from "../Tabs/classTab";
-import { UserContext } from "../../hooks/UserContext";
+
 import { LuPlus } from "react-icons/lu";
+import { TabContext } from "../../context/TabContext";
 
 const AddTabDialog = () => {
   const [tabName, setTabName] = useState<string>('');
   const [tabDescription, setTabDescription] = useState<string>('');
-  const { httpConfigPost } = useContext(UserContext);
+  const { addTab } = useContext(TabContext);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addTab = () => {
+  const insertTab = () => {
     setIsOpen(false);
     setTabName('');
     setTabDescription('');
-    if (!tabName) return
-
     const tab = new Tab(tabName, Number(localStorage.getItem('id')), tabDescription)
-    httpConfigPost(tab, "POST");
+    addTab(tab);
   }
 
   return (
@@ -48,7 +47,7 @@ const AddTabDialog = () => {
               <Dialog.ActionTrigger asChild>
                 <Button onClick={()=>setIsOpen(false)} variant="outline">Cancelar</Button>
               </Dialog.ActionTrigger>
-              <Button colorPalette="red" onClick={addTab}>Salvar</Button>
+              <Button colorPalette="red" onClick={insertTab}>Salvar</Button>
             </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>

@@ -1,13 +1,19 @@
 import './App.css';
+import UserContextProvider from './context/UserContext';
+import TaskContextProvider from './context/TaskContext';
+import TabContextProvider from './context/TabContext';
 import { Provider } from "./components/ui/provider";
-import UserContextProvider from './hooks/UserContext';
 import AppRoutes from './services/routes';
 
 function App() {
   return (
     <Provider>
       <UserContextProvider>
-        <AppRoutes />
+        <TabContextProvider>
+          <TaskContextProvider>
+            <AppRoutes />
+          </TaskContextProvider>
+        </TabContextProvider>
       </UserContextProvider>
     </Provider>
   );

@@ -22,7 +22,6 @@ export function usePost<T>(url: string){
         }
     };
 
-
     // Requisição POST, PUT ou DELETE
     useEffect(() => {
         const httpRequest = async () => {
@@ -37,7 +36,7 @@ export function usePost<T>(url: string){
                 };
 
                 let json = await res.json();
-                setData(json);
+                setData(await json);
                 setError(null);
             } catch (err:any) {
                 setError(err.message);

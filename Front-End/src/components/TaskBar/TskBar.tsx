@@ -1,32 +1,24 @@
 import { Button, Flex } from '@chakra-ui/react'
 import { Task } from './ClassTask'
 import { useContext, useRef, useState } from 'react';
-import usePost from '../../hooks/usePost';
 import LoginInput from '../LoginInput/LoginInput';
 import { MdAddTask } from 'react-icons/md';
-import { UserContext } from '../../hooks/UserContext';
+import { TaskContext } from '../../context/TaskContext';
 
 const TskBar = () => {
     const [novaTarefa, setNovaTarefa] = useState("");
     const [deadline, setDeadline] = useState<Date>();
     const [repetitions, setRepetitions] = useState<number>();
     const [estimedTime, setEstmedTime] = useState<number>();
-    const { httpConfigPost } = usePost('https://api-todo-ckia.onrender.com/task/add');
     const ref = useRef<HTMLInputElement>(null);
-    const { selectedTab, userID, setTarefas, configTask } = useContext(UserContext);
+    const {addTask} = useContext(TaskContext);
 
-    const addTaks = () => {
-        if (!novaTarefa.trim()) return;
-        const task = new Task(userID, novaTarefa, 0, Number(selectedTab), deadline, repetitions, estimedTime);
-        setTarefas((prevTarefas: Task[]) => {
-            return [...prevTarefas, task];
-        })
-        setNovaTarefa("");
+    const insertTask = () =>{
+        const task = new Task( novaTarefa, 0, Number(selectedTab), deadline, repetitions, estimedTime);
         if (ref.current) {
             ref.current.focus();
         }
-        configTask()
-        httpConfigPost(task, "POST");
+        addTask(task);
     }
 
     return (
@@ -37,7 +29,7 @@ const TskBar = () => {
                 <LoginInput labelInput={"Repetições"} width={{base:"200px", sm: "70px"}} onChange={setRepetitions} type={"Number"} value={repetitions} />
                 <LoginInput labelInput={"Data Limite"} width={{base:"200px", sm: "130px"}} onChange={setDeadline} type={"Date"} value={deadline} />
                 <Button
-                    onClick={() => addTaks()}
+                    onClick={() => insertTask()}
                     disabled={!novaTarefa.trim()}
                     bg={'lightgreen'}
                 >

@@ -1,16 +1,17 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { Flex, Heading, List, Tabs, Text } from "@chakra-ui/react"
-import { UserContext } from '../../hooks/UserContext.js';
 import { Task } from '../TaskBar/ClassTask.js'
 import { Tab } from './classTab.js'
 import AddTabDialog from '../popover/AddTabDialog.js';
 import DeleteTabDialog from '../popover/DeleteTabDialog.js';
 import EditTabDialog from '../popover/EditTabDialog.js';
 import Item from '../Item/item';
+import { TaskContext } from '../../context/TaskContext.js';
+import { TabContext } from '../../context/TabContext.js';
 
 const Tabes = () => {
-  const { tarefas, tabs, setSelectedTab, selectedTab, } = useContext(UserContext);
-  // const [selectedTabs, setSelectedTab] = useState<string>(tabs && tabs[0]?.id.toString());
+  const { allTasks: tarefas } = useContext(TaskContext);
+  const { tabs, setSelectedTab, selectedTab, } = useContext(TabContext);
 
   return (
     <Tabs.Root

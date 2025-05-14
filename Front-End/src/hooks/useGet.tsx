@@ -15,12 +15,16 @@ export function useGet<T>(url:string){
           "Content-Type": "application/json"
         }
       });
-      setMethod(method)
+      setMethod(method);
+      httpRequest();
     };
   };
 
   useEffect(() => {
-    const httpRequest = async () => {
+    httpRequest();
+  }, [config, method, url]);
+
+  const httpRequest = async () => {
       if (!config || !method) return;
 
       try {
@@ -37,8 +41,6 @@ export function useGet<T>(url:string){
         setData(null);
       }
     };
-    httpRequest();
-  }, [config, method, url]);
   return { dataGet, httpConfigGet, error };
 };
 
