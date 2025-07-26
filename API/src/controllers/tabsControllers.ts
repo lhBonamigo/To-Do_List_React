@@ -4,7 +4,8 @@ import { AuthenticatedRequest } from '../middlewares/auth.js';
 
 export const addTab: RequestHandler = async (req:AuthenticatedRequest, res, next: NextFunction) => {
     try {
-      const { name, description, user_id } = req.body;
+      const { name, description } = req.body;
+      const user_id = req.user?.id!;
       if (!name || !user_id) res.status(400).json({ erro: "Campos obrigatórios" });
   
       const newTab = await tabService.createTab({ name, description, user_id });
@@ -16,7 +17,8 @@ export const addTab: RequestHandler = async (req:AuthenticatedRequest, res, next
 
 export const updateTabs: RequestHandler = async (req, res, next: NextFunction) =>{
     try {
-        const { name, description, user_id, id } = req.body;
+        const { name, description, id } = req.body;
+        const user_id = req.body;
         if (!name || !description) res.status(400).json({ erro: "Campos obrigatórios" });
 
         await tabService.updateTab({ name, description, user_id }, Number(id));
@@ -26,9 +28,9 @@ export const updateTabs: RequestHandler = async (req, res, next: NextFunction) =
     }
 }
 
-export const deleteTabs: RequestHandler = async (req, res, next: NextFunction) =>{
+export const deleteTabs: RequestHandler = async (req:AuthenticatedRequest, res, next: NextFunction) =>{
     try{
-        const { id } = req.query;
+        const id = req.user?.id;
         if(!id) res.status(400).json({erro: "Id obrigatório"});
         await tabService.deleteTabs(Number(id));
         res.status(200).json({success: "Tab deletada com sucesso"});
@@ -37,9 +39,9 @@ export const deleteTabs: RequestHandler = async (req, res, next: NextFunction) =
     }
 }
 
-export const getTabs: RequestHandler = async (req, res, next: NextFunction) => {
+export const getTabs: RequestHandler = async (req:AuthenticatedRequest, res, next: NextFunction) => {
     try {
-        const { id } = req.query;
+        const id = req.user?.id;
         if (!id) res.status(400).json({ erro: "Id obrigatório" });
         const tabs = await tabService.getTabs(Number(id));
         res.status(200).json(tabs);

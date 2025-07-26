@@ -42,6 +42,7 @@ export const loginUser: RequestHandler = asyncHandler(async (req, res, next: Nex
         const token = jwt.sign({ id: user.id, username: user.username }, secret, {
             expiresIn: '1h',
         });
+        console.log(token);
         res.status(200).json(token)
     } catch (error) {
         next(error)
