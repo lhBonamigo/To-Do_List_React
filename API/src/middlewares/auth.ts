@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Usuario } from "../controllers/userControllers";
 
-const secret = process.env.JWT_SECRET as string;
+const secret:string = process.env.JWT_SECRET || "ABCDEFGHIJKL";
 
 export interface AuthenticatedRequest extends Request {
   user?: Usuario;

@@ -9,7 +9,7 @@ export interface Usuario {
     pass: string
 };
 
-const secret: string = process.env.JWT_SECRET || "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const secret: string = process.env.JWT_SECRET || "ABCDEFGHIJKL";
 
 export const registerUser: RequestHandler = asyncHandler(async (req, res, next: NextFunction) => {
     try {

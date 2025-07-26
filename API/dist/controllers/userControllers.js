@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import * as userService from '../services/userService.js';
 import jwt from 'jsonwebtoken';
 ;
-const secret = process.env.JWT_SECRET || "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const secret = process.env.JWT_SECRET || "ABCDEFGHIJKL";
 export const registerUser = asyncHandler(async (req, res, next) => {
     try {
         const { usuario, pass } = req.body;
