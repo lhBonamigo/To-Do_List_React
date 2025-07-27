@@ -4,6 +4,7 @@ import { useContext, useRef, useState } from 'react';
 import LoginInput from '../LoginInput/LoginInput';
 import { MdAddTask } from 'react-icons/md';
 import { TaskContext } from '../../context/TaskContext';
+import { TabContext } from '../../context/TabContext';
 
 const TskBar = () => {
     const [novaTarefa, setNovaTarefa] = useState("");
@@ -12,8 +13,10 @@ const TskBar = () => {
     const [estimedTime, setEstmedTime] = useState<number>();
     const ref = useRef<HTMLInputElement>(null);
     const {addTask} = useContext(TaskContext);
+    const {selectedTab} = useContext(TabContext);
 
     const insertTask = () =>{
+        console.log(selectedTab)
         const task = new Task( novaTarefa, 0, Number(selectedTab), deadline, repetitions, estimedTime);
         if (ref.current) {
             ref.current.focus();

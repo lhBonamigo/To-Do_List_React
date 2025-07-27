@@ -31,7 +31,6 @@ const Login = () => {
 
   useEffect(() => {
     if (dataPost) {
-      console.log(dataPost);
       insertToken('token', dataPost.toString());
       window.location.href = '/';
     }

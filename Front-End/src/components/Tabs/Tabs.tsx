@@ -12,7 +12,6 @@ import { TabContext } from '../../context/TabContext.js';
 const Tabes = () => {
   const { allTasks: tarefas } = useContext(TaskContext);
   const { tabs, setSelectedTab, selectedTab } = useContext(TabContext);
-  console.log(tabs)
 
   return (
     <Tabs.Root

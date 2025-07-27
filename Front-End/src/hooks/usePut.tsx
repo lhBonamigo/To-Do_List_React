@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Task } from '../components/TaskBar/ClassTask';
 import { Tab } from '../components/Tabs/classTab';
+import { getLocalStorage } from '../services/storage/localstorage';
 
 export function usePut<T>(url: string){
     const [dataPut, setData] = useState<T|null>(null);
-    const [config, setConfig] = useState<{ method: string; headers: { "Content-Type": string }; body: string } | null>(null);
+    const [config, setConfig] = useState<{ method: string; headers: { "Content-Type": string, "Authorization": string }; body: string } | null>(null);
     const [method, setMethod] = useState<string|null>(null);
     const [errorPut, setError] = useState<string>('');
+    const token = getLocalStorage("token");
 
     const httpConfigPut = (body :Task|Tab, method :string) => {
         if (method === 'PUT') {
             setConfig({
                 method,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(body)
             });

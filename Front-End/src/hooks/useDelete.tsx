@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
+import { getLocalStorage } from '../services/storage/localstorage';
 
 export function useDelete() {
     const [dataDel, setData] = useState(null);
     const [options, setOptions] = useState<IHead | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [url, setUrl] = useState<string | null>(null);
+    const token = getLocalStorage("token");
 
     const httpConfigDel = (url: string) => {
         setUrl(url)
         setOptions({
             method: 'DELETE',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
     };
