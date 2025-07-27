@@ -16,7 +16,7 @@ export const updateTabs = async (req, res, next) => {
     try {
         const { name, description, id } = req.body;
         const user_id = req.body;
-        if (!name || !description)
+        if (!name || !user_id)
             res.status(400).json({ erro: "Campos obrigatórios" });
         await tabService.updateTab({ name, description, user_id }, Number(id));
         res.status(200).json({ success: "Tab atualizada com sucesso" });

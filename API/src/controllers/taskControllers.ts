@@ -40,7 +40,7 @@ export const updateTask: RequestHandler = asyncHandler(async(req: AuthenticatedR
             res.status(400).json({ erro: "Conteudo da tarefa não pode ser vazio" });
             return;
         }
-        const updatedTask = await taskService.updateTask({content, tab_task, repetitions, estimatedTime: hours, deadline, status, user_id: user?.id});
+        const updatedTask = await taskService.updateTask({content, tab_task, repetitions, estimatedTime: hours, deadline, status, id});
         res.status(200).json({updatedTask});
     } catch (error) {
         next(error)

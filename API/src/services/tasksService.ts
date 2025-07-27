@@ -51,10 +51,11 @@ export const updateTask = async (task: ITask) => {
             task.tab_task,
             task.repetitions,
             task.estimatedTime,
-            task.user_id
+            task.id
         ], (err, results: ResultSetHeader)=>{
             if (err) reject(err);
             const updated = {task}
+            console.log(updated);
             resolve(updated);
         })
     })

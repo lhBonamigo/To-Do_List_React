@@ -32,8 +32,7 @@ export function usePut<T>(url: string){
             try {
                 let res;
                 res = await fetch(url, config);
-
-
+                
                 if (!res.ok) {
                     setError(res.toString());    
                     throw new Error(`Erro: ${res.status}`);

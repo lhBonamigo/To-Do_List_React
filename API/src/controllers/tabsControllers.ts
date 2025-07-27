@@ -19,7 +19,7 @@ export const updateTabs: RequestHandler = async (req, res, next: NextFunction) =
     try {
         const { name, description, id } = req.body;
         const user_id = req.body;
-        if (!name || !description) res.status(400).json({ erro: "Campos obrigatórios" });
+        if (!name || !user_id) res.status(400).json({ erro: "Campos obrigatórios" });
 
         await tabService.updateTab({ name, description, user_id }, Number(id));
         res.status(200).json({ success: "Tab atualizada com sucesso" });

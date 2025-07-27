@@ -44,11 +44,12 @@ export const updateTask = async (task) => {
             task.tab_task,
             task.repetitions,
             task.estimatedTime,
-            task.user_id
+            task.id
         ], (err, results) => {
             if (err)
                 reject(err);
             const updated = { task };
+            console.log(updated);
             resolve(updated);
         });
     });
