@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import usePost from "../../hooks/usePost";
 import { Input, Flex, Heading, Button, Text, ProgressCircle } from "@chakra-ui/react";
 import LoginInput from '../../components/LoginInput/LoginInput'
-import { changeLocalStorage, insertToken } from "../../services/storage/localstorage";
+import { insertToken } from "../../services/storage/localstorage";
 import { Iresponse } from "../../Interfaces/Interfaces";
 
 const Login = () => {

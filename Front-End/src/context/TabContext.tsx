@@ -39,6 +39,7 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
         const filteredtabs = tabs.filter((tab: Tab) => tab.id !== tabToRemove.id);
         setTabs(filteredtabs);
         deleteTab(`https://api-todo-ckia.onrender.com/tabs/delete?id=${tabToRemove.id}`);
+        console.log(tabToRemove.id);
     }
 
     const updateTab = (tabToUpdate: Tab) => {
