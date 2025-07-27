@@ -22,10 +22,10 @@ interface TabContextProviderProps {
 }
 
 export const TabContextProvider = ({ children }: TabContextProviderProps) => {
-    const { userID, setNotification } = useContext(UserContext);
+    const { setNotification } = useContext(UserContext);
     const [tabs, setTabs] = useState<Tab[]>([]);
     const { httpConfigPut: putTabs, errorPut: putErrorTabs } = usePut<Tab>(`https://api-todo-ckia.onrender.com/tabs/update`);
-    const { dataGet: tabsData, httpConfigGet: getTabs, error: getErrorTabs } = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs?id=${userID}`);
+    const { dataGet: tabsData, httpConfigGet: getTabs, error: getErrorTabs } = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs`);
     const { httpConfigPost: postConfigTabs, errorPost: postErrorTabs, dataPost: postResponseTabs } = usePost<Tab>('https://api-todo-ckia.onrender.com/tabs/add');
     const [selectedTab, setSelectedTab] = useState<string>('0');
     const { httpConfigDel: deleteTab } = useDelete();
@@ -65,8 +65,8 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
     }, [getErrorTabs, putErrorTabs, postErrorTabs])
 
     useEffect(() =>{
-        getTabs();
-    },[userID])
+        getTabs("GET");
+    },[])
 
     return (
         <TabContext.Provider value={{ removeTab, addTab, updateTab, tabs, selectedTab, setSelectedTab }}>

@@ -21,10 +21,10 @@ interface TaskContextProviderProps {
 }
 
 export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
-    const { userID, setNotification } = useContext(UserContext);
+    const { setNotification } = useContext(UserContext);
     const { httpConfigPost: postConfigureTask, dataPost: postResponseTask, errorPost: postErrorTask } = usePost<Task>(`https://api-todo-ckia.onrender.com/task/add`);
     const { httpConfigPut: putConfigureTask, errorPut: putErrorTask } = usePut<Task>(`https://api-todo-ckia.onrender.com/task/update`);
-    const { dataGet: tasksData, httpConfigGet: getConfigureTask, error: getErrorTask } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks?id=${userID}`);
+    const { dataGet: tasksData, httpConfigGet: getConfigureTask, error: getErrorTask } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks`);
     const { httpConfigDel: deleteTask } = useDelete();
     const [allTasks, setAllTasks] = useState<Task[]>([]);
 
@@ -103,7 +103,7 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
 
     useEffect(()=>{
         getConfigureTask("GET");
-    },[userID])
+    },[])
 
     return (
         <TaskContext.Provider value={{ addTask, removeTask, updateTask, handleCheckboxChange, allTasks }}>

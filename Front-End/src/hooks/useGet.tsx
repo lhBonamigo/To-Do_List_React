@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import { IHead } from '../Interfaces/Interfaces';
+import { getLocalStorage } from '../services/storage/localstorage';
 
 export function useGet<T>(url:string){
   const [dataGet, setData] = useState<T|null>();
   const [config, setConfig] = useState<IHead|null>(null);
   const [method, setMethod] = useState<string|null>(null);
   const [error, setError] = useState(null);
+  const token = getLocalStorage("token");
 
   const httpConfigGet = (method?: string) => {
     if (method === "GET") {
       setConfig({
         method,
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         }
       });
       setMethod(method);
