@@ -1,5 +1,5 @@
 import './App.css';
-import UserContextProvider from './context/UserContext';
+import UserContextProvider from './context/NotificationContext';
 import TaskContextProvider from './context/TaskContext';
 import TabContextProvider from './context/TabContext';
 import { Provider } from "./components/ui/provider";

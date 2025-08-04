@@ -5,7 +5,7 @@ import Login from '../pages/Login/Login';
 import Cadastro from '../pages/Cadastro/Cadastro';
 import { getLocalStorage } from './storage/localstorage';
 import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../context/NotificationContext';
 
 function AppRoutes() {
   const Token = getLocalStorage('token');

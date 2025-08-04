@@ -1,6 +1,6 @@
 import { Button, CloseButton, Dialog, Flex, Portal } from "@chakra-ui/react"
 import { useContext, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/NotificationContext";
 import { Task } from "../TaskBar/ClassTask";
 import { PiPencil } from "react-icons/pi";
 import LoginInput from "../LoginInput/LoginInput";

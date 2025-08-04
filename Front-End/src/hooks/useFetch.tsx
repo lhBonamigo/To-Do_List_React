@@ -10,7 +10,7 @@ export function useFetch<T>(url: string) {
     const [loading, setLoading] = useState(false);
     const token = getLocalStorage("token");
 
-    const httpConfig = (body: any, method: string) => {
+    const httpConfig = (method: string, body?: any,) => {
         setLoading(true);
         const baseConfig = {
             method,
@@ -52,7 +52,7 @@ export function useFetch<T>(url: string) {
                 setLoading(false);
             }
         };
-        
+
         httpRequest();
     }, [config, method, url]);
     return { data, httpConfig, error, loading };

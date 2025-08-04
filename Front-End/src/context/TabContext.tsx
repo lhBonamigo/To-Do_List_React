@@ -1,10 +1,8 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { Tab } from "../components/Tabs/classTab";
-import usePut from "../hooks/usePut";
-import useGet from "../hooks/useGet";
-import usePost from "../hooks/usePost";
 import useDelete from "../hooks/useDelete";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./NotificationContext";
+import useFetch from "../hooks/useFetch";
 
 export const TabContext = createContext<TabContextTypes>({} as TabContextTypes);
 
@@ -24,15 +22,15 @@ interface TabContextProviderProps {
 export const TabContextProvider = ({ children }: TabContextProviderProps) => {
     const { setNotification } = useContext(UserContext);
     const [tabs, setTabs] = useState<Tab[]>([]);
-    const { httpConfigPut: putTabs, errorPut: putErrorTabs } = usePut<Tab>(`https://api-todo-ckia.onrender.com/tabs/update`);
-    const { dataGet: tabsData, httpConfigGet: getTabs, error: getErrorTabs } = useGet<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs`);
-    const { httpConfigPost: postConfigTabs, errorPost: postErrorTabs, dataPost: postResponseTabs } = usePost<Tab>('https://api-todo-ckia.onrender.com/tabs/add');
+    const { httpConfig: putTabs, error: putErrorTabs } = useFetch<Tab>(`https://api-todo-ckia.onrender.com/tabs/update`);
+    const { data: tabsData, httpConfig: getTabs, error: getErrorTabs } = useFetch<Tab[]>(`https://api-todo-ckia.onrender.com/tabs/tabs`);
+    const { httpConfig: postConfigTabs, error: postErrorTabs, data: postResponseTabs } = useFetch<Tab>('https://api-todo-ckia.onrender.com/tabs/add');
     const [selectedTab, setSelectedTab] = useState<string>('0');
     const { httpConfigDel: deleteTab } = useDelete();
 
     const addTab = (tabToAdd: Tab) => {
         if (!tabToAdd.name) return
-        postConfigTabs(tabToAdd, "POST");
+        postConfigTabs("POST", tabToAdd);
     }
 
     const removeTab = (tabToRemove: Tab) => {
@@ -43,7 +41,7 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
     }
 
     const updateTab = (tabToUpdate: Tab) => {
-        putTabs(tabToUpdate, "PUT");
+        putTabs("PUT", tabToUpdate);
     }
 
     useEffect(() => {

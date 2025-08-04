@@ -1,10 +1,8 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { Task } from "../components/TaskBar/ClassTask";
-import useGet from "../hooks/useGet";
-import usePut from "../hooks/usePut";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./NotificationContext";
 import useDelete from "../hooks/useDelete";
-import usePost from "../hooks/usePost";
+import useFetch from "../hooks/useFetch";
 
 export const TaskContext = createContext<TaskContextTypes>({} as TaskContextTypes);
 
@@ -22,9 +20,9 @@ interface TaskContextProviderProps {
 
 export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
     const { setNotification } = useContext(UserContext);
-    const { httpConfigPost: postConfigureTask, dataPost: postResponseTask, errorPost: postErrorTask } = usePost<Task>(`https://api-todo-ckia.onrender.com/task/add`);
-    const { httpConfigPut: putConfigureTask, errorPut: putErrorTask } = usePut<Task>(`https://api-todo-ckia.onrender.com/task/update`);
-    const { dataGet: tasksData, httpConfigGet: getConfigureTask, error: getErrorTask } = useGet<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks`);
+    const { httpConfig: postConfigureTask, data: postResponseTask, error: postErrorTask } = useFetch<Task>(`https://api-todo-ckia.onrender.com/task/add`);
+    const { httpConfig: putConfigureTask, error: putErrorTask } = useFetch<Task>(`https://api-todo-ckia.onrender.com/task/update`);
+    const { data: tasksData, httpConfig: getConfigureTask, error: getErrorTask } = useFetch<Task[]>(`https://api-todo-ckia.onrender.com/task/tasks`);
     const { httpConfigDel: deleteTask } = useDelete();
     const [allTasks, setAllTasks] = useState<Task[]>([]);
 
@@ -41,7 +39,7 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
             return [...prevTarefas, newTask];
         })
 
-        postConfigureTask(newTask, "POST");
+        postConfigureTask("POST", newTask);
         getConfigureTask("GET");  //aqui preciso ver se o melhor método é fazer um get para atualizar a lista com id corretamente.
         orderTasks();
     }
@@ -54,7 +52,7 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
     }
 
     const updateTask = (taktToUpdate: Task) => {
-        putConfigureTask(taktToUpdate, "PUT");
+        putConfigureTask("PUT", taktToUpdate);
         orderTasks();
     }
 
@@ -75,7 +73,7 @@ export const TaskContextProvider = ({ children }: TaskContextProviderProps) => {
                     estimatedTime: tarefaAtualizada.estimatedTime,
                     repetitions: tarefaAtualizada.Repetitions,
                 };
-                putConfigureTask(body, "PUT");
+                putConfigureTask("PUT", body);
             }
             return novasTarefas;
         });
