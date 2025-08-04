@@ -50,11 +50,11 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
         setTabs(tabsData ? tabsData : []);
     }, [tabsData])
 
-    useEffect(()=>{
-       // setAllTasks((prevTarefas: Task[]) => {
-            // rever para adicionar a task retornada no post
-       // })
-    },[postResponseTabs])
+    // useEffect(()=>{
+    //    setTabs((prevTab: Tab[]) => {
+            
+    //    })
+    // },[postResponseTabs])
 
     useEffect(() => {
         if (putErrorTabs) setNotification(putErrorTabs);
