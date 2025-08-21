@@ -46,7 +46,7 @@ export const updateTask = asyncHandler(async (req, res, next) => {
 });
 export const deleteTask = asyncHandler(async (req, res, next) => {
     try {
-        const user = req.user;
+        const user = req.query;
         if (!user?.id) {
             res.status(400).json({ erro: "ID da tarefa não pode ser vazio" });
             return;

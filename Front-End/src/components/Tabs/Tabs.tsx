@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { Flex, Heading, List, Tabs, Text } from "@chakra-ui/react"
 import { Task } from '../TaskBar/ClassTask.js'
 import { Tab } from './classTab.js'

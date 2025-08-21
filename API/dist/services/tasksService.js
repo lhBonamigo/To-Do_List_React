@@ -57,6 +57,7 @@ export const updateTask = async (task) => {
 export const deleteTask = async (id) => {
     return new Promise((resolve, reject) => {
         const sql = "DELETE FROM task WHERE id = ?;";
+        console.log(id);
         pool.query(sql, [id], (err, results) => {
             if (err)
                 reject(err);

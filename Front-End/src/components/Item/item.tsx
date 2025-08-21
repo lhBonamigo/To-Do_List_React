@@ -18,7 +18,7 @@ const item = ({ task }: Iprops) => {
             <input
                 type="checkbox"
                 checked={task.status === 1 ? true : false}
-                onChange={() => handleCheckboxChange(task.id)}
+                onChange={() => handleCheckboxChange(Number(task.id))}
             />
             <Text className="text" w={"100%"} ml={".5em"}>
                 {task.content}

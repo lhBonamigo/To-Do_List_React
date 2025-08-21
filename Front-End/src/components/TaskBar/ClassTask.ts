@@ -1,12 +1,14 @@
 export class Task{
-    id: number;
+    id?: number;
     status: number;
     content: string;
     tab_task: number;
     clock?: number;
+    newTask?: Task;
     deadline?: Date;
     Repetitions?: number = 0;
     estimatedTime?: number = 0;
+    updatedTask?: Task
     constructor(content: string,  status: number, tab_task:number, deadline?: Date, Repetitions?: number, estimatedTime?: number, clock?: number){
         this.deadline = deadline;
         this.Repetitions = Repetitions;

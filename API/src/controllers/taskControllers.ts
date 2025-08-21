@@ -49,7 +49,7 @@ export const updateTask: RequestHandler = asyncHandler(async(req: AuthenticatedR
 
 export const deleteTask: RequestHandler = asyncHandler(async(req:AuthenticatedRequest, res, next: NextFunction) => {
     try {
-       const user = req.user;
+       const user = req.query;
        if (!user?.id){
         res.status(400).json({erro: "ID da tarefa não pode ser vazio"});
         return;

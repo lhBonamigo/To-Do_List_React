@@ -3,6 +3,7 @@ export class Tab{
     name: string;
     user_id : number;
     description?: string |undefined;
+    newTab?: Tab
 
     constructor(name: string, user_id: number, description?:string, id?: number) {
         this.id = id || 0; // Default to 0 if id is not provided

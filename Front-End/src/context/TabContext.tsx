@@ -49,11 +49,11 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
         setTabs(tabsData ? tabsData : []);
     }, [tabsData])
 
-    // useEffect(()=>{
-    //    setTabs((prevTab: Tab[]) => {
-            
-    //    })
-    // },[postResponseTabs])
+    useEffect(() => {
+        if (postResponseTabs) {
+            setTabs(prevTabs => [...prevTabs, postResponseTabs.newTab!])
+        }
+    }, [postResponseTabs])
 
     useEffect(() => {
         if (putErrorTabs) setNotification(putErrorTabs);
@@ -64,9 +64,9 @@ export const TabContextProvider = ({ children }: TabContextProviderProps) => {
         }, 3000);
     }, [getErrorTabs, putErrorTabs, postErrorTabs])
 
-    useEffect(() =>{
+    useEffect(() => {
         getTabs("GET");
-    },[])
+    }, [])
 
     return (
         <TabContext.Provider value={{ removeTab, addTab, updateTab, tabs, selectedTab, setSelectedTab }}>
