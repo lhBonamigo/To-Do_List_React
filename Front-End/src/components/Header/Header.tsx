@@ -1,16 +1,19 @@
-import { Button, Heading } from "@chakra-ui/react";
+import { Flex, Heading, Icon } from "@chakra-ui/react";
+import { FiMoreHorizontal } from "react-icons/fi";
 
-const BiExit = () => {
- localStorage.removeItem('token');
- window.location.href = '/Login';
- window.location.reload();
-}
+// const BiExit = () => {
+//     localStorage.removeItem('token');
+//     window.location.href = '/Login';
+//     window.location.reload();
+// }
 
 export const Header = () => {
     return (
         <>
-            <Heading size={"4xl"}>Minha lista de tarefas</Heading>
-            <Button onClick={BiExit}>Sair</Button>
+            <Flex w={{ base: '100vw' }} alignItems={'center'} justifyContent={"space-between"} p={'10px'} bgColor={'#343E48'}>
+                <Heading size={"4xl"}>To-Do List</Heading>
+                <Icon ><FiMoreHorizontal/></Icon>
+            </Flex>
         </>
     );
 }

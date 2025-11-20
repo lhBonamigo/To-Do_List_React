@@ -11,7 +11,7 @@ const LoginInput = ({labelInput, value, onChange, type, width}: propFunc) => {
                     type={type}
                     value={value}
                     onChange={(e) => {onChange(e.target.value) }}
-                    border={'1px solid white'}
+                    border={'1px solid #B5BDC8'}
                     px={'5px'}
                 />
             </Flex>
