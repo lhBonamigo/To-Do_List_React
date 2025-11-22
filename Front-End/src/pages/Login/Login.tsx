@@ -65,7 +65,13 @@ const Login = () => {
       justify="center"
       bg="#1F2630"
     >
-      <Container maxW="md" color={"#B5BDC8"} p={8} bg="#343E48" borderRadius="lg" boxShadow="lg">
+      <Container 
+        maxW="md" 
+        color={"#B5BDC8"} 
+        p={8} bg="#343E48" 
+        borderRadius="lg" 
+        boxShadow="lg"
+      >
         <VStack as="form" onSubmit={(e: FormEvent<HTMLDivElement>) => handleSubmit(e)}>
 
           <Heading size="3xl" textAlign="center" color="#B5BDC8">

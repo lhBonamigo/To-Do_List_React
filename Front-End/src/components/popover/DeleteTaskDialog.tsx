@@ -1,26 +1,31 @@
 import { Button, CloseButton, Dialog, Portal } from "@chakra-ui/react"
 import { useContext } from "react";
 import { Task } from "../TaskBar/ClassTask";
-import { BiTaskX } from "react-icons/bi";
 import { TaskContext } from "../../context/TaskContext";
 
 interface IpropComp {
-  taskToRemove: Task
+  taskToRemove: Task,
+  children: React.ReactNode;
 }
 
-const DeleteDialog = ({ taskToRemove }: IpropComp) => {
+const DeleteDialog = ({ taskToRemove, children }: IpropComp) => {
   const { removeTask } = useContext(TaskContext);
-  
+
   return (
     <Dialog.Root role="alertdialog">
-      <Dialog.Trigger asChild mr={'1em'}>
-        <BiTaskX />
+      <Dialog.Trigger asChild>
+        {children}
       </Dialog.Trigger>
-      <Portal>
+      <Portal >
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Header display={"flex"} direction={'column'} justifyContent={"space-between"} p={'1.5em'}>
+          <Dialog.Content bg='#1F2630'>
+            <Dialog.Header
+              display={"flex"}
+              direction={'column'}
+              justifyContent={"space-between"}
+              p={'1.5em'}
+            >
               <Dialog.Title>Tem certeza?</Dialog.Title>
               <Dialog.CloseTrigger asChild>
                 <CloseButton size="sm" />
@@ -36,7 +41,12 @@ const DeleteDialog = ({ taskToRemove }: IpropComp) => {
                 <Button variant="outline">Cancelar</Button>
               </Dialog.ActionTrigger>
               <Dialog.ActionTrigger asChild>
-                <Button colorPalette="red" onClick={() => removeTask(taskToRemove)}>Excluir</Button>
+                <Button
+                  colorPalette="red"
+                  onClick={() => removeTask(taskToRemove)}
+                >
+                  Excluir
+                </Button>
               </Dialog.ActionTrigger>
             </Dialog.Footer>
           </Dialog.Content>

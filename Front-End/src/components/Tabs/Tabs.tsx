@@ -23,12 +23,30 @@ const Tabes = () => {
         setSelectedTab(e.value);
       }}
     >
-      <Tabs.List flex="1 1 auto" overflowX={"scroll"} h={"80px"} mt={"10px"}>
+      <Tabs.List
+        bg='#343E48'
+        borderRadius={'full'}
+        flex="1 1 auto"
+        overflowX={"scroll"}
+        mt={"10px"}
+        py='2px'
+      >
         {tabs && tabs.map((tab: Tab) => (
-          <Tabs.Trigger value={tab.id.toString()} key={tab.id} h={{ base: "60px" }} minW={"150px"} mx={"4px"}>
-            {tab.name}{"  "}
-            <EditTabDialog tabe={tab} />
-            <DeleteTabDialog tabToRemove={tab} />
+          <Tabs.Trigger
+            value={tab.id.toString()}
+            borderRadius='full'
+            key={tab.id}
+            minW="content"
+            textWrap='nowrap'
+            mx="4px"
+            color={selectedTab == tab.id.toString() ? '#343E48' : '#B5BDC8'}
+            bg={selectedTab == tab.id.toString() ? '#B5BDC8' : '#343E48'}
+          >
+            {tab.name + " "}
+            {selectedTab === tab.id.toString() ? <>
+              <EditTabDialog tabe={tab} />
+              <DeleteTabDialog tabToRemove={tab} />
+            </> : <></>}
           </Tabs.Trigger>
         ))}
         <AddTabDialog />
@@ -38,7 +56,10 @@ const Tabes = () => {
         <Tabs.Content value={selectedTab}>
           {tabs?.length > 0 && (
             <>
-              <Heading size="xl" my="6">
+              <Heading
+                size="xl"
+                my="6"
+              >
                 {tabs.find((t) => t.id.toString() === selectedTab)?.description}
               </Heading>
               <Flex direction={"column"}>
@@ -47,9 +68,17 @@ const Tabes = () => {
                     {tarefas
                       .filter(task => task.tab_task.toString() === selectedTab)
                       .map((task: Task) => (
-                        <List.Item key={task.id} border={'1px solid white'} w={{ base: "250px", sm: "400px", md: "700px", lg: "900px" }} py={'.7em'} pl={'.3em'} mt={".5em"} display={"flex"} alignItems={"Center"}>
-                          <Item task={task} />
+
+                        <List.Item
+                          key={task.id}
+                          listStyle='none'
+                          m='9px'
+                        >
+                          <Item
+                            task={task}
+                          />
                         </List.Item>
+
                       ))}
                   </List.Root>
                 ) : (

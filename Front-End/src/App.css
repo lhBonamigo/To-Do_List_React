@@ -18,7 +18,7 @@
     margin-right: 10px;
 }
 
-input[type="checkbox"]:checked + .text {
+.risked{
     text-decoration: line-through;
     color: #999;
 }

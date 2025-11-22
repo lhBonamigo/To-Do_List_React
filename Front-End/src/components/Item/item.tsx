@@ -1,10 +1,9 @@
 import { useContext } from 'react'
 import { Task } from '../TaskBar/ClassTask'
-import EditeDialog from '../popover/EditTaskDialog';
-import DeleteDialog from '../popover/DeleteTaskDialog';
-import { Text } from '@chakra-ui/react'
+import { Checkbox, Flex, Text } from '@chakra-ui/react'
 import React from 'react';
 import { TaskContext } from '../../context/TaskContext';
+import {TaskMenu} from '../../components/TaskMenu/TaskMenu';
 
 interface Iprops {
     task: Task
@@ -14,18 +13,36 @@ const item = ({ task }: Iprops) => {
     const { handleCheckboxChange } = useContext(TaskContext);
 
     return (
-        <>
-            <input
-                type="checkbox"
-                checked={task.status === 1 ? true : false}
+        <Flex 
+            justifyContent='space-between' 
+            w='100%'
+            height='100%'
+            bg='#343E48'
+            p='25px'
+            borderRadius="2xl"
+            boxShadow='sm'
+        >
+
+            <Checkbox.Root
+                checked={task.status === 1 ? true : false} 
                 onChange={() => handleCheckboxChange(Number(task.id))}
-            />
-            <Text className="text" w={"100%"} ml={".5em"}>
-                {task.content}
-            </Text>
-            <EditeDialog tarefa={task} />
-            <DeleteDialog taskToRemove={task} />
-        </>
+            >
+                <Checkbox.HiddenInput />
+                <Checkbox.Control border='1px solid #B5BDC8' />
+                <Checkbox.Label>
+                    <Text 
+                        className={task.status === 1 ? 'risked' : "text"} 
+                        w="100%"
+                    >
+                        {task.content}
+                    </Text>
+                </Checkbox.Label>
+            </Checkbox.Root>
+            
+           <Flex>
+                <TaskMenu task={task}/>                
+           </Flex>
+        </Flex>
     )
 }
 export default React.memo(item);
